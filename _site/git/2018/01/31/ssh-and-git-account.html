@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>关于各种开源许可License</title>
+	<title>ssh-and-git-account</title>
 	
 	<meta name="author" content="JackLee">
 
@@ -123,7 +123,7 @@
 
 	<div class="col-sm-9 col-sm-offset-3">
 		<div class="page-header">
-  <h1>关于各种开源许可License </h1>
+  <h1>ssh-and-git-account </h1>
 </div>
 	
 <article>
@@ -131,58 +131,61 @@
 	<div class="col-sm-10">
 	 <span class="post-date">
 	   
-	   August 
-	   30th,
-	   
-	   2016
+	   January 
+	   31st,
+	     
+	   2018
 	 </span>
 	  <div class="article_body">
-	  <p>问题很简单，每次阅读代码，发现遇到的开源许可不太一样，不明觉厉。</p>
+	  <p>多设备免登陆和多账号在不同项目中自动切换配置。</p>
 
-<p>今天看到了老外整理的，就梳理一下吧。</p>
+<h3 id="1多台电脑提交代码的场景">1.多台电脑提交代码的场景</h3>
+<blockquote>
+  <p>在公司的时候，需要提交代码到GitLab上的repo；然后在家的时候，有时候也需要提交代码到公司项目中。那么push pull的时候一直输入用户名密码就比较费事了。</p>
+</blockquote>
 
-<hr />
+<p>那么<a href="https://help.github.com/articles/connecting-to-github-with-ssh/">使用ssh的方式</a>就可以解决上面这个问题。</p>
 
-<h1 id="我想要它简单和自由">我想要它简单和自由</h1>
-
-<p>嗯，那就用<a href="http://choosealicense.com/licenses/mit/">MIT License</a>。</p>
-
-<p><strong>jQuery, .NET Core, and Rails</strong> 用了MIT许可。</p>
-
-<h1 id="我关心专利">我关心专利</h1>
-
-<p>那就试试<a href="http://choosealicense.com/licenses/apache-2.0/">Apache License 2.0</a></p>
-
-<p><strong>Android, Apache, and Swift</strong> 用了Apache License 2.0.</p>
-
-<h1 id="我在意分享">我在意分享</h1>
-
-<p><a href="http://choosealicense.com/licenses/gpl-3.0/">GNU General Public License v3.0</a>
-这个许可需要任何分发或者衍生你代码的人使代码在同等条款下可得，并且也提供了把专利从贡献者给使用者的授权。</p>
-
-<p><strong>Bash, GIMP, and Privacy Badger</strong> 用了GNU GPLv3.</p>
-
-<hr />
-<p>如果上面的都不符合需求？</p>
+<p>上面的超链接，提供了如下几点：</p>
 
 <ol>
-  <li>
-    <p>我的项目不是软件： <a href="http://choosealicense.com/non-software/">有其他许可的</a>。</p>
+  <li>什么是ssh</li>
+  <li>检测已经存在的ssh Key</li>
+  <li>生成新的ssh Key并添加到ssh agent中
+    <blockquote>
+      <p>一般来说我们实际场景会需要生成两种，自己项目需要使用一个 id_rsa_github，公司项目需要使用一个 id_rsa_work。这样子，提交到不同repo的时候，才会有不同的用户名。</p>
+    </blockquote>
   </li>
-  <li>
-    <p>我想要更多的选择：<a href="http://choosealicense.com/licenses/">这里有</a>。</p>
-  </li>
-  <li>
-    <p>我不需要一个许可： 嗯，这不是必须的。</p>
-  </li>
+  <li>检测是否成功</li>
+  <li>使用ssh工作</li>
 </ol>
 
-<hr />
+<blockquote>
+  <p>⚠️一定要做第四步的添加到agent中</p>
+  <h3 id="2-多个repo提交的时候使用不同的用户名">2. 多个Repo提交的时候，使用不同的用户名</h3>
+  <p>自己在GitHub上有项目需要维护，公司的项目也是用GitLab协作维护的，那么有时候在家用自己的电脑提交代码到公司，于是就产生需要在不同的项目应用不同<code class="highlighter-rouge">user name</code>的需求了；
+简单说，我在公司提交代码里面的用户名需要是RealName；而提交代码到GitHub的时候，想要用NickName</p>
+</blockquote>
+
+<p>这里涉及到的就是 <code class="highlighter-rouge">git config --global </code> 还是<code class="highlighter-rouge">git config --local</code> 的问题</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd  testRepo
+git config --local user.email personal@example.org
+git config --local user.name "whatf hobbyist user name"
+</code></pre></div></div>
+
+<blockquote>
+  <p>⚠️email地址不需要 双引号，而 用户名是需要的</p>
+</blockquote>
 
 <p>参考资料：</p>
 
+<p>1.<a href="https://stackoverflow.com/questions/4220416/can-i-specify-multiple-users-for-myself-in-gitconfig">Can I specify multiple users for myself in .gitconfig?</a></p>
+
+<p>2.<a href="http://happy123.me/blog/2014/12/07/duo-ge-gitzhang-hao-zhi-jian-de-qie-huan/">多个git账号之间的切换</a></p>
+
 <blockquote>
-  <p><a href="http://choosealicense.com/">Choose an open source license</a></p>
+  <p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
 </blockquote>
 
 
@@ -194,8 +197,8 @@
 		  
 		  
 			 
-				<li><a href="/categories.html#随笔-ref">
-					随笔 <span>(7)</span>
+				<li><a href="/categories.html#git-ref">
+					git <span>(2)</span>
 					
 				</a></li>
 			
@@ -210,7 +213,7 @@
 		<div>
       <section class="share col-sm-6">
         <h4 class="section-title">Share Post</h4>
-        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=关于各种开源许可License"
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=ssh-and-git-account"
            onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
           <i class="fa fa-twitter fa-lg"></i>
           Twitter
@@ -238,10 +241,10 @@
 
 		<ul class="pager">
 		  
-		  <li class="previous"><a href="/android/2016/08/26/%E5%A4%9Amodule%E7%BB%9F%E4%B8%80gradle%E9%85%8D%E7%BD%AE.html" title="AndroidStudio 多个module统一gradle文件配置">&larr; Previous</a></li>
+		  <li class="previous"><a href="/%E9%9A%8F%E7%AC%94/2016/08/30/%E5%85%B3%E4%BA%8E%E5%90%84%E7%A7%8D%E8%AE%B8%E5%8F%AF.html" title="关于各种开源许可License">&larr; Previous</a></li>
 		  
 		  
-		  <li class="next"><a href="/git/2018/01/31/ssh-and-git-account.html" title="ssh-and-git-account">Next &rarr;</a></li>
+			<li class="next disabled"><a>Next &rarr;</a>
 		  
 		</ul>
 
