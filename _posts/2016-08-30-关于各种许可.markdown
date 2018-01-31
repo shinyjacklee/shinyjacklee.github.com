@@ -1,0 +1,59 @@
+---
+layout: post
+title:  "关于各种开源许可License"
+date:   2016-08-30 
+categories: [随笔]
+---
+
+问题很简单，每次阅读代码，发现遇到的开源许可不太一样，不明觉厉。
+
+今天看到了老外整理的，就梳理一下吧。
+
+
+------
+
+
+#  我想要它简单和自由
+
+嗯，那就用[MIT License](http://choosealicense.com/licenses/mit/)。
+
+
+**jQuery, .NET Core, and Rails** 用了MIT许可。
+
+
+# 我关心专利
+ 
+那就试试[Apache License 2.0](http://choosealicense.com/licenses/apache-2.0/)
+
+ **Android, Apache, and Swift** 用了Apache License 2.0.
+
+
+# 我在意分享
+
+[GNU General Public License v3.0](http://choosealicense.com/licenses/gpl-3.0/)
+这个许可需要任何分发或者衍生你代码的人使代码在同等条款下可得，并且也提供了把专利从贡献者给使用者的授权。
+
+**Bash, GIMP, and Privacy Badger** 用了GNU GPLv3.
+
+------
+如果上面的都不符合需求？
+
+1. 我的项目不是软件： [有其他许可的](http://choosealicense.com/non-software/)。
+
+2. 我想要更多的选择：[这里有](http://choosealicense.com/licenses/)。
+
+3. 我不需要一个许可： 嗯，这不是必须的。
+
+
+
+________
+
+参考资料：
+
+>  [Choose an open source license](http://choosealicense.com/)
+
+
+ 
+
+
+

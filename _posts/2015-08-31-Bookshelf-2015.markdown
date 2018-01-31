@@ -1,0 +1,35 @@
+---
+layout: post
+title:  "Bookshelf 2015 "
+date:   2015-08-31 
+categories: [学习-计划]
+---
+Yeah,if you know you are ugly,then you do some reading,that's why am here.
+
+
+__What's already readed below__
+
+- _2015/5/5~2015/6/30 Android Programming (The.Big.Nerd.Ranch.Guide )_
+
+- _2015/7/8~2015/8/11 Introduction to Java Programming_
+
+- _2015/8/11~2015/8/15 Learning Android Canvas_
+
+- _2015/8/17~2015/8/31 Level Up! The Guide To Great Game Design(Extra Affairs)_
+
+ __And To Read List__
+
+- <s>Android群英传[added 2015/9/14]</s>
+- <s>Android开发艺术探索_ [added 2015/9/14]</s>
+- _Android Recipes(4th Edition)_ [added 2015/9/14]
+- _Effective Java_
+- _Java Programming (Part2)_
+- _Efficient Android Threading_
+- _Java Design Patterns_
+- _Data Structure_ 
+
+
+ 
+
+
+

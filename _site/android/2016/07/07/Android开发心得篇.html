@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Android开发心得纪录</title>
+	
+	<meta name="author" content="JackLee">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/shinyjacklee">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			
+			<a class="navbar-brand" href="/">
+				<img src="http://www.gravatar.com/avatar/?s=35" class="img-circle" />
+				JackLee
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=150" />
+	</a>
+	<h3 class="title">
+        <a href="/">JackLee</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	One  Developer who love design:)
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/shinyjacklee">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>Android开发心得纪录 </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   July 
+	   7th,
+	   
+	   2016
+	 </span>
+	  <div class="article_body">
+	  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>嗯，突然觉得有必要记录记录一些东西，一些细微的有时候注意一下就能省力不少的点。
+</code></pre></div></div>
+
+<p>持续跟新中….
+想到了就来更新…</p>
+
+<hr />
+
+<h3 id="网络层">网络层</h3>
+
+<ol>
+  <li>
+    <p>项目一开始的时候，写网络层的时候，注意一下，请求出去的时候的loading效果，不要持有发出请求的那个Activity或者Fragment,不然到时候空指针会多。</p>
+  </li>
+  <li>
+    <p>关于全局无网络的处理，建议一开始就在外面套个无网络的布局，就像emptyView一样，然后发请求的时候，check一下网络通不通，不通就显示出来，然后关闭请求。我们现在的版本到了后来优化的时候才有这个需求导致后面动了好多地方。</p>
+  </li>
+  <li>
+    <p>网络一定要维护请求队列，必须要有停止对列中的请求的方法，当某个页面打开，数据还没有回来的时候，就关闭了，那么一定要去杀掉那个请求。</p>
+  </li>
+</ol>
+
+<h3 id="ui容器">UI容器</h3>
+<ol>
+  <li>RecyclerView或者老一点的ListView都要写好emptyView，即item数据没有的情况下显示一个友好的提示，点击来个refresh()的操作的。</li>
+</ol>
+
+<h3 id="适配的问题">适配的问题</h3>
+
+<ol>
+  <li><strong>注意一下老年人字体导致布局爆掉的问题</strong>：最近发现部分客户反馈说布局扭曲了，截图过来一看果真是适配来适配去，却没有想到字体用了sp做单位，然后用户可能是老年人，系统设置里面的字体是最大的那种，然后UI爆掉了。
+原因是<strong>sp会读取系统的设置里面的大小。</strong>
+所以方案有俩：</li>
+</ol>
+
+<ul>
+  <li>换掉sp到dp。此法虽说简单，但是，如果一开始没有用，所有布局以及代码里面写出的都得找到然后设置单位为dp，工作量是一个问题，能不能100%全部替换又是一个问题。</li>
+</ul>
+
+<blockquote>
+  <p>这样处理的小tip: 全局替换，Android Studio很强大的重构设计，cmd+shift+R,关键词是<code class="highlighter-rouge">sp"</code>,替换为<code class="highlighter-rouge">dp"</code>,加个过滤器（目标文件选择一下<code class="highlighter-rouge">*.XML</code>，目标文件夹选择<code class="highlighter-rouge">res/</code>）,否则就可能遇到<code class="highlighter-rouge">spannable</code>或者<code class="highlighter-rouge">sP</code>被正则匹配到，然后就头疼不敢随便doRefactor了。</p>
+</blockquote>
+
+<ul>
+  <li>
+    <p>既然sp做单位的Textview去读了系统设置，那么直接覆盖掉它读取系统设置的就好了。嗯，给BaseActivity里面增加如下方法。</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>         @Override  public Resources getResources() {
+ Resources res = super.getResources();
+ Configuration config = new Configuration();
+ config.setToDefaults();
+ res.updateConfiguration(config, res.getDisplayMetrics());
+ return res;  }
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<blockquote>
+  <p>我们现在是两种方案都应用了，疗效甚好 ：）</p>
+</blockquote>
+
+<h3 id="兼容性的问题">兼容性的问题</h3>
+
+<ol>
+  <li>有用户反映之前设置好的手势密码丢失了。然后哼次哼次看代码，请QA复现求出边界条件，可是还是没有找到原因。代码里面倒是有点瑕疵的，之前保存sharedPreference封装的方法有点问题，然后新的版本我们更新了保存sp的工具类，于是遇到了新旧版本的兼容性问题。
+可能出问题的地方：</li>
+</ol>
+
+<ul>
+  <li>保存SP： 保存会出现文件路径变了，1）app的文件夹是否换了 ；2）保存sp的key是否变了，建议写成constants的方式。</li>
+  <li>读取SP： 如果前面保存没有问题了，那么新版本读取旧版本的sp数据的时候，一旦读到了，正确的做法是立即用新的一套保存sp的方式保存一下。那么在迭代几个版本，就可以在一处地方把兼容之前版本的那些代码给清理干净了。还有一个好处就是，你需要用到某个sp的时候不用多处都写冗余写兼容读取的逻辑了，一个入口读取下兼容处理，下面都是新的入口读写操作了，清爽,不易出问题。</li>
+</ul>
+
+<h3 id="关于测试环境生产环境的切换问题">关于测试环境，生产环境的切换问题</h3>
+
+<p>这个问题，一般都会遇到，还会有一个，测试环境才要打印log信息的问题。
+之前我们的做法是，在application里面定一个boolean，类似<code class="highlighter-rouge">isDebug</code>这样的命名，然后有一些逻辑切换根据这个量来切换API和打印log与否什么的，但是打包的时候可能类似这样需要注意的地方比较多，所以还是可以优化的，嗯，是的。
+借助Gradle打包，我们可以选择不同的flavor的时候打出相应的配置的包，不用每次费事，还写了几处地方坐判断什么的。
+参考一下这个就好了。</p>
+
+<p><a href="https://segmentfault.com/a/1190000004904068">Android:构建不同环境的APK</a></p>
+
+<p><a href="http://stackoverflow.com/questions/22506290/buildconfigfield-depending-on-flavor-buildtype">StackOverFlow的相关提问</a></p>
+
+<p><a href="http://blog.csdn.net/kasogg/article/details/50585257">Gradle 多环境配置</a></p>
+
+<hr />
+<p>Loading…</p>
+
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#Android-ref">
+					Android <span>(14)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		
+		<ul class="list-inline">
+		  <li><i class="fa fa-tags"></i></li>
+		  
+		  
+			 
+				<li>
+					<a href="/tags.html#心得-ref">
+					心得 <span>(1)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#总结-ref">
+					总结 <span>(1)</span>
+					
+					</a>
+				</li>
+			
+		  
+		  
+		</ul>
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Android开发心得纪录"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=50" class="img-rounded author-image" />
+        <h4 class="section-title author-name">JackLee</h4>
+        <p class="author-bio">One  Developer who love design:)</p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/%E9%9A%8F%E7%AC%94/2016/07/05/%E7%94%9F%E6%B4%BB%E6%9C%89%E6%84%9F.html" title="生活有感">&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/%E5%AD%A6%E4%B9%A0-%E8%AE%A1%E5%88%92/2016/07/26/%E6%8A%80%E8%83%BD%E6%A0%88%E7%9A%84%E6%80%9D%E8%80%83.html" title="技能栈的思考">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2016 ~ 2018 JackLee with Jekyll. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+

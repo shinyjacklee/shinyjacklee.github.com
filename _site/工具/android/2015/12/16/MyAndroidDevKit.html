@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>My Software Kit for Android Developing</title>
+	
+	<meta name="author" content="JackLee">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/shinyjacklee">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			
+			<a class="navbar-brand" href="/">
+				<img src="http://www.gravatar.com/avatar/?s=35" class="img-circle" />
+				JackLee
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=150" />
+	</a>
+	<h3 class="title">
+        <a href="/">JackLee</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	One  Developer who love design:)
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/shinyjacklee">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>My Software Kit for Android Developing </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   December 
+	   16th,
+	   
+	   2015
+	 </span>
+	  <div class="article_body">
+	  <p>整理出开发环境搭建 <em>2015/12/16</em></p>
+
+<p>Update:整理记录详尽点的工作环境 <em>2016/5/3</em></p>
+
+<hr />
+
+<h4 id="一个android开发的工具箱">一个Android开发的工具箱</h4>
+
+<ul>
+  <li>
+    <p>基本开发环境</p>
+
+    <ol>
+      <li>
+        <p><code class="highlighter-rouge">JDK</code></p>
+      </li>
+      <li>
+        <p><code class="highlighter-rouge">AndroidStudio</code></p>
+      </li>
+    </ol>
+
+    <p><em>附件： AS里面效率工具插件：</em></p>
+
+    <ul>
+      <li>ButterKnife 不喜欢写很多的findViewById就用这个注解吧</li>
+      <li>GsonFormat 配合GSON很好很强大的工具，节省一杯咖啡的时间</li>
+      <li>Fabric twitter出品的免费强大的crash日志收集系统</li>
+      <li><em>loading…</em></li>
+    </ul>
+  </li>
+  <li>
+    <p>必需的工具</p>
+
+    <ol>
+      <li><code class="highlighter-rouge">chrome</code>，如果你喜欢<code class="highlighter-rouge">FireFox</code>也不错。
+chrome下面强大的插件生态，收藏夹等特性，无疑开发者最友好的浏览器，没有之一。
+<em>附件：我的chrome插件</em>
+        <ul>
+          <li>JSON格式化工具<code class="highlighter-rouge">JSON-handle</code>。</li>
+          <li>打开很多网页，觉得都挺好的，又不想关闭，可是内存爆了，那么试试<code class="highlighter-rouge">OneTab</code>，可以一键把当前所有page收藏折叠保存起来,支持一键恢复等。</li>
+          <li>老牌的网页调试发送请求的工具<code class="highlighter-rouge">PostMan</code>，说到这个得提一下抓包工具了，我在win下用的是<code class="highlighter-rouge">Fiddler</code>,OS X 下推荐<code class="highlighter-rouge">Charles</code>，均属神器。</li>
+          <li>Android手机直接在PC端调试？不想每次低头按手机？ 试试<code class="highlighter-rouge">Vysor</code>插件吧。</li>
+          <li>Proxy Switchy# always online…</li>
+          <li>Octotree,每次浏览Github的时候路径比较深，想回退到上上一层页面要返回两次，用了这个神器，可以一次跳转了。</li>
+          <li>Adblock Plus,恼人的广告再见。</li>
+        </ul>
+      </li>
+      <li>
+        <p>SQL数据库查看工具：
+我在win下用的是<code class="highlighter-rouge">SQLExpert</code>，在OS X下用的是<code class="highlighter-rouge">SQLite Free Datum</code>。至于导出手机里面自己的数据库，AS里面已经换到<code class="highlighter-rouge">Android Device Monitor</code>了，不要试图找什么<code class="highlighter-rouge">DDMS</code>了,然后就是<code class="highlighter-rouge">File Explorer</code>旁边就是你喜欢的小按钮，导入导出。</p>
+      </li>
+      <li>版本控制系统VCS(Version Control System)：
+        <ul>
+          <li><code class="highlighter-rouge">GIT</code>，我在win里面是有两个的，一个是<code class="highlighter-rouge">gitHub</code>,还有一个是gitHub <code class="highlighter-rouge">shell</code>,就是命令行工具，在OS X下安装的时候，可以自己勾选一下，同时安装shell工具。安装好了之后as里面可以直接上terminal，挺方便的。</li>
+          <li>如果你喜欢<code class="highlighter-rouge">SVN</code>，我在win下用的是<code class="highlighter-rouge">tortoiseSVN</code>，然后在eclipse里面用了一个<code class="highlighter-rouge">subClipse</code>这个插件，就可以在<code class="highlighter-rouge">eclipse</code>里面直接push pull了。</li>
+        </ul>
+      </li>
+      <li>文档阅读:
+嗯，我一直以为搞开发的看文档都会用<code class="highlighter-rouge">Dash</code>的，appStore搜索一下，真神器，各种语言的API文档还有编辑器等快捷键，还有比如SQL语句的小抄。
+然后高级点的，<code class="highlighter-rouge">sourceInsight</code>，还有我的朋友推荐的<code class="highlighter-rouge">atom</code>。</li>
+      <li>文本编辑器：
+        <ul>
+          <li><code class="highlighter-rouge"> SublimeText</code> 因为学习成本相对于<code class="highlighter-rouge">vim</code>或者<code class="highlighter-rouge">emacs</code>不是很高，然后各种语言支持，时不时的改点C代码又不想安装很重的IDE，有了sublimeText直接CMD＋B编译，然后再加个shift就运行了，<code class="highlighter-rouge">UltraEdit</code>要key的，估计也不错吧。</li>
+          <li><code class="highlighter-rouge">Notepad++</code>代表的简单编辑器。</li>
+          <li>笔记本－印象笔记<code class="highlighter-rouge">Evernote</code>等。</li>
+        </ul>
+      </li>
+      <li>
+        <s>` Eclipse Mars` ,学习`JAVA8`需要。</s>
+        <p><code class="highlighter-rouge">IntelliJ IDEA</code> 由于快捷键切换的成本，不再推荐eclipse了，因为AS基于IDEA开发的，所以默认的快捷键是基本一样的，so写java的话用更智能的idea吧。</p>
+      </li>
+      <li>虚拟机：
+        <ul>
+          <li><code class="highlighter-rouge">Genymotion</code> ，Eclipse年代受过AVD折磨的人都知道的神器。</li>
+          <li><code class="highlighter-rouge">VirtualBox</code>不解释，你喜欢的话，<code class="highlighter-rouge">VMware Workstation</code>也行。</li>
+        </ul>
+      </li>
+      <li>
+        <p>团队协作IM工具，<code class="highlighter-rouge">EIM</code>，<code class="highlighter-rouge">Slack</code>,还有你的<code class="highlighter-rouge">Wechat</code>  之类的 。</p>
+      </li>
+      <li>
+        <p>保护眼睛，<code class="highlighter-rouge">F.lux</code>,这个工具在随着时间推移改变屏幕亮度颜色，晚上的时候光比较昏黄柔和，iOS9.3里面新增的那个<code class="highlighter-rouge">Night shift</code>就是类似这个功能的。</p>
+      </li>
+      <li>
+        <p>修改Mac的F1 F2这样的功能键。写代码的时候热键F系列总是背占用，很恼人，那么改回来吧。［System preferences］-[keyboard]- 勾选上讲F1，F2等作为标准功能键，热键F5等就解放出来了。</p>
+      </li>
+      <li>
+        <p>效率管理工具，推荐<code class="highlighter-rouge">OmniPlan</code>（感谢我的朋友OKernel慷慨的赠予），这个是收费的，你也可以在chrome里面安装一个番茄钟插件。</p>
+      </li>
+      <li>
+        <p>录屏小工具，推荐<code class="highlighter-rouge">LiceCap</code>,
+这个软件可以把视屏录制成GIF格式，然后拖拽到chrome就可以打开了。如果有录制手机的需求，无疑AndroidStudio里面提供的屏幕录制功能挺好的，路径在AS-Android Monitor-然后找到小相机下面的就是了，and这个是直接录制成Mp4格式的。
+但是因为Github里面还有QQ里面支持GIF直接播放，所以我一般录制好了都会用chrome播放一下，同时用liceCap再录制一下转成GIF的。</p>
+      </li>
+      <li>如果有需要和产品设计沟通，或者自己取色之类的，可能需要<code class="highlighter-rouge">sketch(OS X only)</code>,<code class="highlighter-rouge">Axure</code>,<code class="highlighter-rouge">photoshop</code>等 。</li>
+    </ol>
+  </li>
+</ul>
+
+<h4 id="总结">总结</h4>
+<p>JDK AS Chrome SQL GitHub SublimeText IntelliJ IDEA Genymotion VirtualBox Slack Evernote Flux OmniPlan LiceCap Sketch</p>
+
+<p><strong>The end</strong></p>
+
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#工具-ref">
+					工具 <span>(5)</span>
+					,
+				</a></li>
+			 
+				<li><a href="/categories.html#Android-ref">
+					Android <span>(14)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		
+		<ul class="list-inline">
+		  <li><i class="fa fa-tags"></i></li>
+		  
+		  
+			 
+				<li>
+					<a href="/tags.html#开发环境-ref">
+					开发环境 <span>(1)</span>
+					
+					</a>
+				</li>
+			
+		  
+		  
+		</ul>
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=My Software Kit for Android Developing"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=50" class="img-rounded author-image" />
+        <h4 class="section-title author-name">JackLee</h4>
+        <p class="author-bio">One  Developer who love design:)</p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/%E5%B7%A5%E5%85%B7/2015/12/10/SublimeText2%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%95%B4%E7%90%86.html" title="SublimeText2快捷键整理">&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/%E9%9A%8F%E7%AC%94/2015/12/31/bye-2015-hi-2016.html" title="Bye2015Hi2016">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2016 ~ 2018 JackLee with Jekyll. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+

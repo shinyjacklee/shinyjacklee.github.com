@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Activity生命周期和启动模式</title>
+	
+	<meta name="author" content="JackLee">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/shinyjacklee">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			
+			<a class="navbar-brand" href="/">
+				<img src="http://www.gravatar.com/avatar/?s=35" class="img-circle" />
+				JackLee
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=150" />
+	</a>
+	<h3 class="title">
+        <a href="/">JackLee</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	One  Developer who love design:)
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/shinyjacklee">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>Activity生命周期和启动模式 </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   November 
+	   12th,
+	   
+	   2015
+	 </span>
+	  <div class="article_body">
+	  <p>1.关于生命周期</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.1 Activity生命周期 ? 处理任务？
+
+* onCreate()做一下初始化工作，包含界面和数据
+* onRestart()一般是Home键回去的时候，生命周期是onPause()-&gt;onStop()-&gt;onRestart()-&gt;onResume()
+* onStart()是正在启动，还未可见
+* onResume()是可见了
+* onPause()正在停止，正常情况下onStop()紧接着会调用，此时可以做一下存储数据停止动画。但是不能太耗时。因为会影响下一个Activity的显示，可以在onStop()里面。
+* onDestroy()即将销毁，做回收工作和资源释放。
+</code></pre></div></div>
+
+<p>在配置变化和内存不足情况下，系统配置发生变化 ，屏幕旋转了等，在onSaveInstanceState()和onRestoreInstance State()里面做View的保存和恢复操作。<strong>这个方法只会在异常停止的情况下出现，正常不会回调的。</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*数据保存的时机*
+</code></pre></div></div>
+
+<p>一般在onPause做短时的数据存储，停止动画，在onStop()做稍微耗时的。
+onDestory()释放资源等。</p>
+
+<p>2.关于启动模式</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.1 几个启动模式，区别
+
+* standard每次都会new,默认进去启动他的Activity的栈中，但是如果是以application为context的时候，要加个FLAG_ACTIVITY_NEW_TASK，因为application是没有任务栈的
+* singleTop栈顶复用
+如果栈内是ABCD，新加D(singleTop模式)则为ABCD，会调用D的onNewIntent() But D的onCreate() onStart()不会调用
+如果是standard标准模式，那么就是ABCDD.
+* singleTask栈内复用
+__singleTask默认自带clearTop__，对应flag是NEW_TASK|CLEAR_TOP; 
+如果是ADBC，然后新加D(singleTask模式)，那么栈会是AD，这点比较特殊。
+* singleInstance单独在一个栈内，整个周期单例。
+
+1.2 Activity的Flag
+
+* NEW_TASK---singleTask
+* SINGLE_TOP---singleTop
+* CLEAR_TOP清理掉上面所有的
+* FROM_RECENTS不会加到历史任务栈中
+</code></pre></div></div>
+
+<p>3.关于IntentFilter的匹配规则</p>
+
+<p>显示和隐式</p>
+
+<p>action ，category，data</p>
+
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#Android-ref">
+					Android <span>(14)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		
+		<ul class="list-inline">
+		  <li><i class="fa fa-tags"></i></li>
+		  
+		  
+			 
+				<li>
+					<a href="/tags.html#Activity-ref">
+					Activity <span>(2)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#生命周期-ref">
+					生命周期 <span>(1)</span>
+					
+					</a>
+				</li>
+			
+		  
+		  
+		</ul>
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Activity生命周期和启动模式"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=50" class="img-rounded author-image" />
+        <h4 class="section-title author-name">JackLee</h4>
+        <p class="author-bio">One  Developer who love design:)</p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/android/2015/10/12/CircleProgressView-in-my-eyes.html" title="CircleProgressView in my eyes">&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/android/2015/11/25/understand-android-activity-launchmode.html" title="理解Android启动模式">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2016 ~ 2018 JackLee with Jekyll. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+

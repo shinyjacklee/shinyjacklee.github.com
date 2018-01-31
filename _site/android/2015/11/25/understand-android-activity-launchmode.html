@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>理解Android启动模式</title>
+	
+	<meta name="author" content="JackLee">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/shinyjacklee">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			
+			<a class="navbar-brand" href="/">
+				<img src="http://www.gravatar.com/avatar/?s=35" class="img-circle" />
+				JackLee
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=150" />
+	</a>
+	<h3 class="title">
+        <a href="/">JackLee</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	One  Developer who love design:)
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/shinyjacklee">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>理解Android启动模式 </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   November 
+	   25th,
+	   
+	   2015
+	 </span>
+	  <div class="article_body">
+	  <p>Activity是Android系统最杰出的组件之一,从Activity众所周知的在允许多任务在绝大多数手机运行良好的内存管理方面的良好架构可以看出来了。</p>
+
+<p>不管怎么说，Activity不只是简单的在屏幕上显示，它如何启动也是一个值得考虑的问题。这个话题有很多细节，其中一个相当重要的点就是Activity的启动模式，这就是我们今天在这篇博客要讨论的。</p>
+
+<p>每个Activity做不太一样的任务。有些Activity被设计成使用Intent来独立完成任务的，比如一个邮箱客户端里面编辑邮件的Activity；然而还有些是要单例运行的，比如这个客户端的收件箱Activity。</p>
+
+<p>所以指定一个Activity是否要重新创建还是使用已经存在的实例这个问题就比较重要了，否则就会出现比较差的用户体验或者功能问题。感谢Android的核心 的开发工程师，在特别设计的启动模式的帮助下我们就可以容易的完成这个需求了。</p>
+
+<p><strong><em>指定一个启动模式</em></strong>
+我们可以在AndroidManifest.xml文件里的<activity>标签内直接指定一个下面的属性：</activity></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;activity
+        android:name=".SingleTaskActivity"
+        android:label="singleTask launchMode"
+        android:launchMode="singleTask"&gt;
+</code></pre></div></div>
+
+<p>一共有四种可用的启动模式，我们依次来看吧。</p>
+
+<p>1.<strong>standard</strong></p>
+
+<p>这是默认的。</p>
+
+<p>设置这个standard模式的Activity将会每次新建个发送单独Intent工作的Activity。想象一下，如果发送了十个写邮件的Intent那么就会启动十个Activity来单独处理每个Intent。结果就是设备上会启动无限个那种Activity。</p>
+
+<ul>
+  <li>在Android pre-Lollopop版本中
+这种Activity会被创建并放置到发送Intent的Activity的栈的栈顶。</li>
+</ul>
+
+<p>当我们分享一个图片到一个standard的Activity。新的Activity会被放到启动这个Activity的栈里面，即使是它们是属于不同的应用。你在TaskManager里面会看到这个，或许有点奇怪。</p>
+
+<p>如果我们把这个应用切换到另外一个，然后在返回Gallery，我们依然可以看到那个standard模式启动的Activity处于Gallery的task中。那么如果我们要对Gallery做一些处理就需要先结束那个增加的Activity。</p>
+
+<ul>
+  <li>在Android Lollipop版本中</li>
+</ul>
+
+<p>如果是同一个应用的Activities，会和在pre-Lollipop版本一样，新的Activity放在task栈顶。
+但是如果启动的Intent是另一个不同的应用发送的话，新的Activity会新开一个task栈。
+这个是因为任务管理器系统在lollipop版本的时候修改得更好更有意义。在lollipop版本你可以直接返回Gallery因为他们在不同的task。你也可以发送另外一个Intent，一个新的Task会像之前的一样被创建来服务这个Intent。</p>
+
+<p>这种Activity的例子就是邮件编辑Activity或者是社交应用里面发布新状态的Activity。如果你需要一个Activity单独为每个Intent服务，就可以想想这个standard模式。</p>
+
+<p>2.<strong>singleTop</strong></p>
+
+<p>接下的模式就是singleTop模式。它几乎和standard模式一样，这意味着singleTop模式的Activity实例可以创建我们想要的次数。唯一的区别就是，如果已经有一个该Activity实例并且已经在启动它的Activity的Task的栈顶，那么就不会创建出这个Activity实例,那么会通过onNewIntent(）方法发送Intent到这个已经存在的Activity实例。</p>
+
+<p>所以在singleTop模式下，你需要处理来自onCreate()和onNewIntent(）方法的Intent，这样应用才会在各种情况下都运行良好。</p>
+
+<p>其中一个使用singleTop模式的示例就是搜索功能。让我们想象一下，创建一个可以引导到SearchActivity看搜索结果的搜索框，为了更好的用户体验，一般来说我们也会一直将这个搜索框放在搜索结果页，这样用户要再搜索其他的就不需要按下返回键了。</p>
+
+<p>如果我们一直为每个新的搜索结果启动一个新的SearchActivity，十次搜索就会有十个新的Activities，如果要返回你就得返回十次才能到你的根Activity，这将会是非常奇怪的事情。</p>
+
+<p>如果在栈顶有了一个SearchActivity，我们最好可以发送一个Intent到这个已经存在的Activity实例然后让他更新一下搜索结果。那么现在就会只有一个SearchActivity在栈顶，你可以只要返回一次就能回到之前的Activity了，这样才讲的通。</p>
+
+<p>不管怎么说，singleTop模式只在调用者同一个task内有效。如果你希望一个发送一个Intent启动一个在其他task中处于栈顶的已经存在的Activity实例，恐怕你要失望了，singleTop无法那样使用。为了防止其他的应用发送一个singleTop模式的Activity过来，一个新的Activity会以standard模式启动（在pre-Lollipop版本放置到了调用者的Task栈，在Lollipop会新建一个新的Task，如上所述）。</p>
+
+<p>3.<strong>singleTask</strong></p>
+
+<p>这个模式和standard以及singleTop模式有很大的不同，singleTask模式的Activity在系统中只允许有一个实例（也可以说，单例模式）。如果在系统中已经有个singleTask模式的Activity实例存在，该实例所在的Task栈会被移动到顶部，Intent会通过onNewIntent()发送过来。否则一个新的Activity会在合适的Task中被创建。</p>
+
+<ul>
+  <li>在同一个应用里
+如果在系统里尚没有那个singleTask模式的Activity实例存在，就会在同一个Task中创建一个新的Activity并置顶。
+但是如果已经存在那个实例的话，那么所有置于那个singleTask模式的Activity都会自动以合适的方式（生命周期里面触发）被销毁掉，这样那个我们想要的Activity就会出现在栈顶了。同时，一个Intent将会通过可爱的onNewIntent()方法被发送到这个singleTask模式的Activity。</li>
+</ul>
+
+<p>或许在用户使用过程中好像讲不通，但是它就是那样设计的。。。</p>
+
+<p>在文档中你或许会发现一件事说：</p>
+<blockquote>
+  <p>The system creates a new task and instantiates the activity at the root of the new task.
+但事实看来，并不是文档描述的那样。我们可以从dumpsys activity命令看出来 ，一个singleTask模式的Activity依然会置顶于Task的Activity栈。
+如果你希望让一个singleTask的Activity像文档描述的那样，那么就新建一个Task，然后把放一个Activity到里面作为root的Activity。你需要像这样指定taskAffinity属性到这个singleTask的Activity中：</p>
+</blockquote>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;activity
+        android:name=".SingleTaskActivity"
+        android:label="singleTask launchMode"
+        android:launchMode="singleTask"
+        android:taskAffinity=""&gt;
+</code></pre></div></div>
+
+<p>是否需要Activity使用taskAffinity就是你的工作了。</p>
+
+<ul>
+  <li>和其他的应用一起使用</li>
+</ul>
+
+<p>一旦有来自其他应用的Intent发送过来，并且系统里面尚没有任何Activity实例，新的Task会被创建，并且会有新创建的Activity放在里面作为rootActivity。
+除非这个应用的一个Task里面已经存在这个调用singleTask模式的Activity,那么就会新建一个新的Activity在这个Task的栈顶。
+如果在任何Task里面已经有一个这样的Activity实例，整个Task会被置顶，每个在栈里面处于这个singleTask模式的Activity上面的Activity会在生命周期里面被回收。如果返回按钮被按下了，用户在回到调用的Task时就需要穿过所有那个栈里面的Activities。</p>
+
+<p>这个模式的示例就是任何邮件客户端的收件箱或者说社交产品的时间线（编者按：QQ里面叫时光轴）。这样的Activity设计成不可以有多个实例，singleTask模式能很完美的实现这个需求。不管怎么说，这个模式需要很机智的使用，因为其他的Activities可能会在用户不知情的情况下被回收，就像上面描述的一样。</p>
+
+<p>4.<strong>singleInstance</strong></p>
+
+<p>这个模式和singleTask有点类似，只有一个Activity实例会存在系统中，而区别就是，存放singleInstance模式的Task栈只能放一个Activity，就是这个singleInstance的Activity。如果其他的Activity被这种（singleInstance模式）Activity调用，一个新的Task会自动创建来放新的Activity。同样的，如果调用了singleInstance模式的Activity，就会创建一个新的Task来放这个Activity。</p>
+
+<p>不管怎么说，结果是有的奇怪的。dumpsys命令提供的信息看来，系统里面会有两个Task，但是只有一个Task出现在了任务管理器，这个取决于哪个是最后一个置顶的。结果就是，尽管后台还有一个Task正在工作，但是我们不能返回到前台，这一点讲不通。</p>
+
+<p>这就是当一个singleInstance模式的Activity被调用然而栈里面已经有些其他的Activities的时候发生的事情了。但是在任务管理器里面看确实只有一个Task。</p>
+
+<p>因为这个Task里面只能有一个Activity,我们不能切换回Task#1了。要实现这个需求，我们就只有从launcher重新启动这个应用，但这样的话这个singleInstance的Task会被隐藏在后台了。</p>
+
+<p>当然了，这个issue还是有方法解决的，就像我们在singleTask Activity里面做的，简单的在这个singleInstance的Activity实例指定一个taskAffinity属性，这样在任务管理器里面就能多任务了。这个模式使用的比较少，应用的示例就是Launcher的Activity或者是你百分比确定只有一个Activity的应用。我建议如果不是万不得已，别使用这个模式。</p>
+
+<p><strong><em>Intent Flags</em></strong>
+除了在AndroidManifest.xml文件中直接指定启动模式之外，我们也可以通过称作IntentFlags的机制赋予更多的行为，比如说，</p>
+
+<p>Intent intent = new Intent(StandardActivity.this, StandardActivity.class);
+intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+startActivity(intent);</p>
+
+<p>这样会启动一个有singleTop启动模式的叫做StandardActivity。你可以试试，有很多这样的的Flags，在Intent里面可以发现很多。
+希望这篇文章对你有用 :)</p>
+
+<p><a href="http://inthecheesefactory.com/blog/understand-android-activity-launchmode/en">source</a></p>
+
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#Android-ref">
+					Android <span>(14)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		
+		<ul class="list-inline">
+		  <li><i class="fa fa-tags"></i></li>
+		  
+		  
+			 
+				<li>
+					<a href="/tags.html#启动模式-ref">
+					启动模式 <span>(1)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#Activity-ref">
+					Activity <span>(2)</span>
+					
+					</a>
+				</li>
+			
+		  
+		  
+		</ul>
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=理解Android启动模式"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=50" class="img-rounded author-image" />
+        <h4 class="section-title author-name">JackLee</h4>
+        <p class="author-bio">One  Developer who love design:)</p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/android/2015/11/12/ActivityLifeCircle.html" title="Activity生命周期和启动模式">&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/%E5%B7%A5%E5%85%B7/2015/12/03/Android-studio-%E5%BF%AB%E6%8D%B7%E9%94%AE-Mac-OS-X-10.5+.html" title="Android studio 快捷键 Mac OS X 10.5+">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2016 ~ 2018 JackLee with Jekyll. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+

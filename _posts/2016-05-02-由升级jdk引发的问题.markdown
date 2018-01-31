@@ -1,0 +1,77 @@
+---
+layout: post
+title:  "从升级JDK说起"
+date:   2016-05-02 
+categories: [JAVA]
+tag: [JDK]
+---
+
+我一直不喜欢软件在我不愿意的情况下自己就后台升级upgrade or update了，所以有一安装就关闭掉自动更新的习惯。
+
+但是有一天，Android Studio提示我JDK的某个版本有bug，希望我升级到最新的包以避开那些对我未知的问题。
+
+那么我就得手动check update了，最后找到了入口:系统首选项的java面板，然后打开里面就是了。
+
+然后我就在stackOverFlow上那个问题下面抖机灵了。
+
+__system：OS X EI Caption__
+
+1. [LaunchPad]->[System Perference]->[JAVA]
+2. Click the JAVA then the Java Control Panel will be open,click the Updatetab.
+
+这个案子就产生了。
+
+> Your answer is misleading. What you're showing is how to update JRE, while the OP asked for JDK update. – Alex Lipov Apr 8 at 9:32
+
+老外说，我在首选项里面java面板检查更新的那个是JRE, OrigianlPost（理解成“楼主”）需要的是升级JDK。
+wtf...
+那么正文来了：
+
+### JRE ？JDK ？
+
+折腾半天上stackOverFlow找，上各种博客找答案，找到了。
+
+
+字面上很简单
+
+- Java Runtime Environment
+- Java Development Kit 
+
+权威答案是：
+
+> Oracle has two products that implement Java Platform Standard Edition (Java SE) 8:
+ Java SE Development Kit (JDK) 8 and Java SE Runtime Environment (JRE) 8.
+
+> JDK 8 is a superset of JRE 8, and contains everything that is in JRE 8, plus tools such as the compilers and debuggers necessary for developing applets and applications. JRE 8 provides the libraries, the Java Virtual Machine (JVM), and other components to run applets and applications written in the Java programming language. Note that the JRE includes components not required by the Java SE specification, including both standard and non-standard Java components.
+![](https://github.com/jackL-e-e/gitSourceServer/blob/master/img/JRE.jpg)
+[权威来源：Oracle javase 8 docs](http://docs.oracle.com/javase/8/docs/)
+
+甲骨文解释是这样的： 
+
+JDK8是JRE8的一个超集（集合里面的概念，对应的是子集），JDK8里面包含了JRE8所有的东西之外还有其他工具，比如编译器、开发applets和applications必要的调试工具等等。
+
+JRE8提供了java虚拟机JVM和其他组件来运行java语言写的applets、applications的库。
+
+⚠️ JRE包含了一些JAVA SE规范里没有需要的组件，包括标准和非标准组件。
+
+------
+
+#### 总结：
+__JRE 是运行时库,即，如果需要运行java安装这个就够了；
+JDK 是开发java需要的工具箱（环境），如果需要写java代码，那么就需要安装JDK了，所以我们做Android开发必然装的是JDK啦。__
+
+老外说我在stack over flow 上讲的不对，为何系统首选项里面java面板检查更新升级的就只是JRE呢？ 在我没有安装JDK之前，设置里面是没有java面板的，作为user角度，确实不知里面的玄机，记录一下，不能贻笑大方了。
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+

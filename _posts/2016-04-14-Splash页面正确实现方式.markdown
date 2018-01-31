@@ -1,0 +1,65 @@
+---
+layout: post
+title:  "Splash页面正确实现方式"
+date:   2016-04-14 
+categories: [Android]
+---
+我们在写开屏启动页面的时候，或许一般都是`setContentView()`，然后引用了一个只有一张图片的布局，然后在find到这个`ImageView`，然后把图片set上去。最后或许来个延时300ms在跳转到下一个页面。
+
+这个写法存在的问题就是等app完全初始化好的时候用户才看到layout，这是很慢的。
+
+正确的方式是，让Splash在应用初始化前用很短的时间内显示出。
+
+那么_正确的实现Splash界面的方式_是怎样实现的呢。
+
+具体的就是指定Splash页面的背景作为这个`splashActivity`的`Theme`来代替上面那种使用`Layout`文件的方式。
+
+第一步，先在`res/drawable`下面new一个XML。
+    
+    <?xml version="1.0" encoding="utf-8"?>
+    <layer-list     xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@color/gray"/>
+    <item>
+    <bitmap
+            android:gravity="center"
+            android:src="@mipmap/ic_launcher"/>
+    </item>
+    </layer-list>
+
+那么，我们久设置好了背景色和一个图片。
+
+第二步，设置splashActivity的主题。找到`styles.xml`文件，增加一个新的`Theme`：
+
+    <resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+    </resources>
+
+主题new好了，那么就设置到`splashActivity`就好了。
+
+第三步，我们的splashActivity里面：
+
+    public class SplashActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+}
+
+>千里之行，始于足下。
+
+Source：
+[splash-screens-the-right-way](https://www.bignerdranch.com/blog/splash-screens-the-right-way/)

@@ -1,0 +1,129 @@
+---
+layout: post
+title:  "适配Android5.0之后的通知"
+date:   2016-05-24 
+categories: [Android]
+tag: [Notification,Lollipop]
+---
+
+    是时候记录关于通知Notification的事情了，我们厂App的通知Notification在5.0+上面icon显示白块，下来展开也是白块，这是个问题。
+
+### 背景及解决的过程记录
+查了一圈下来，原因是在lollipop上开始，Android的Notification作了较大的变动，更多的Android 系统的特性和用户体验（更多的代码要写）。
+
+> 在 Android 5.0 中，通知在结构、外观和功能方面获得了重要的更新：
+
+-  通知在外观上发生了更改，与新的材料设计主题保持一致。
+-  通知现在可以在设备锁定屏幕上使用，而敏感信息仍然可以隐藏于背后。
+-  设备在使用时收到的高优先级通知现在采用名为浮动通知的新格式。
+-  云同步通知：在一台 Android 设备上清除通知，则在其他设备上也会将其清除
+[From Design Pure Android](https://developer.android.com/design/patterns/notifications.html)
+
+在文档中找到了原因（解释）
+>使用不同的图标
+
+- 建议用法
+
+ **查看 Android 应用已经提供的通知图标并为您的应用创建外观明显不同的通知图标。
+对小图标使用正确的通知图标样式，对操作图标使用相应的材料灯操作栏图标。
+图标外观要简洁清晰，避免使用过于精细、难以辨认的图标**
+
+- <s>禁忌用法</s>
+
+ <s>对小图标和操作图标设置任何附加的阿尔法通道属性（变暗或变淡）；这些图标会有抗锯齿边缘，但是由于 Android 使用这些图标作为蒙板（即仅使用阿尔法通道），因此通常应以完全不透明的方式绘制图像。
+利用色彩将您的应用与其他应用区分开来。通知图标应该是纯白透明背景图像。</s>
+
+
+**就是说，smallIcon对应的那个icon应该是只具备黑白的，不要使用什么阴影之类的。
+而LargeIcon是可以是app应用的彩色样式的图片的。**
+这就是为何我们的通知出来的都是一个白块的解释。至于 代码层面的解释，如下：
+
+ 
+    private RemoteViews applyStandardTemplate(int resId, boolean hasProgress) {
+    //...
+    if (mLargeIcon != null) {
+         contentView.setImageViewBitmap(R.id.icon, mLargeIcon);
+         processLargeLegacyIcon(mLargeIcon, contentView);
+         contentView.setImageViewResource(R.id.right_icon, mSmallIcon);
+         contentView.setViewVisibility(R.id.right_icon, View.VISIBLE);
+         processSmallRightIcon(mSmallIcon, contentView);
+     } else { // small icon at left
+         contentView.setImageViewResource(R.id.icon, mSmallIcon);
+         contentView.setViewVisibility(R.id.icon, View.VISIBLE);
+         processSmallIconAsLarge(mSmallIcon, contentView);
+    }
+    //...
+}
+/**
+         * Recolor small icons when used in the R.id.right_icon slot.
+         */
+        private void processSmallRightIcon(int smallIconDrawableId,
+                RemoteViews contentView) {
+            if (!isLegacy() || mColorUtil.isGrayscaleIcon(mContext, smallIconDrawableId)) {
+                contentView.setDrawableParameters(R.id.right_icon, false, -1,
+                        0xFFFFFFFF,
+                        PorterDuff.Mode.SRC_ATOP, -1);
+
+                contentView.setInt(R.id.right_icon,
+                        "setBackgroundResource",
+                        R.drawable.notification_icon_legacy_bg);
+
+                contentView.setDrawableParameters(
+                        R.id.right_icon,
+                        true,
+                        -1,
+                        resolveColor(),
+                        PorterDuff.Mode.SRC_ATOP,
+                        -1);
+            }
+        } 
+        ⚠️代码分析来自下面《Android5.0通知变化浅析》
+OK，原因我们基本上搞清楚了，简单说，就是Lollipop以后，为了风格统一，状态栏那边做了处理，都只能用alpha通道描述的小icon作Notification的smallIcon。不符合这个要求的图片在变动的代码处理之后就变白的了。
+
+
+
+### 方案
+那么解决方案呢？哈哈哈哈，问Google啊。
+
+最后我们是在SO社区找到的[答案](http://stackoverflow.com/questions/28387602/notification-bar-icon-turns-white-in-android-5-lollipop),方案有俩，简单来说：
+
+1. 治标不治本～
+省事的做法把targetVersion设置为20吧，这样的效果是：你可以保持在5.0+的设备上，smallIcon是彩色的，但是缺陷是，无法使用Lollipop上Notification新的feature or API.
+2. 治本！
+顾名思义，修改你的smallIcon符合Android 5.0+的[设计规范](http://developer.android.com/design/style/iconography.html),即，只有alpha通道的图。
+3. 嗯?
+更加的方案？治标而且快？嗯，试试这个[助手](http://romannurik.github.io/AndroidAssetStudio/icons-notification.html)，很好很强大，省的和设计费口水，讲了半天还不知道怎么做，然后自己试了半天还是白板，然后又不好意思继续骚扰人家。
+使用很简单，类似TinyPNG那个压缩图片的，直接把你的smallIcon 拖拽进去，然后输NAME，如果符合规范的你就会看到生成好的icon，不然就是白板。整理好了之后，可以直接download下所有drawable-xxx的图片，效率极大的提升！
+
+
+>Thx GitHub ,Thx Stackoverflow.etc
+
+  其实，我们的项目还有一个插曲，就是Jpush极光推送，用过的就知道了，嗯，他们新的版本支持了，把SDK里面的一套全部到Jpush更新一下吧。
+
+-------
+
+#### 额外的极光的章节
+
+> 说明 1：若没有res/drawable-xxxx/jpush_notification_icon这个资源默认使用应用图标作为通知icon，在5.0以上系统将应用图标作为statusbar icon可能显示不正常，用户可定义没有阴影和渐变色的icon替换这个文件，文件名不要变。
+[参考SDK文档的关于这个的说明](http://docs.jiguang.cn/guideline/android_guide/#sdk)
+
+
+
+
+-------
+嗯，Finally，用bing搜索搜到的值得看参考了的结果如下：
+
+- [ Android通知栏微技巧，那些你所没关注过的小细节](http://blog.csdn.net/guolin_blog/article/details/50945228)
+- [Android5.0通知变化浅析](http://www.cnblogs.com/avenwu/p/4180193.html) 
+
+
+
+
+
+
+
+
+
+
+
+

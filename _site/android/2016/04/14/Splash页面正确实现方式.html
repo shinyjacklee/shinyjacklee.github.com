@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Splash页面正确实现方式</title>
+	
+	<meta name="author" content="JackLee">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/shinyjacklee">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			
+			<a class="navbar-brand" href="/">
+				<img src="http://www.gravatar.com/avatar/?s=35" class="img-circle" />
+				JackLee
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=150" />
+	</a>
+	<h3 class="title">
+        <a href="/">JackLee</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	One  Developer who love design:)
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/shinyjacklee">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>Splash页面正确实现方式 </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   April 
+	   14th,
+	   
+	   2016
+	 </span>
+	  <div class="article_body">
+	  <p>我们在写开屏启动页面的时候，或许一般都是<code class="highlighter-rouge">setContentView()</code>，然后引用了一个只有一张图片的布局，然后在find到这个<code class="highlighter-rouge">ImageView</code>，然后把图片set上去。最后或许来个延时300ms在跳转到下一个页面。</p>
+
+<p>这个写法存在的问题就是等app完全初始化好的时候用户才看到layout，这是很慢的。</p>
+
+<p>正确的方式是，让Splash在应用初始化前用很短的时间内显示出。</p>
+
+<p>那么_正确的实现Splash界面的方式_是怎样实现的呢。</p>
+
+<p>具体的就是指定Splash页面的背景作为这个<code class="highlighter-rouge">splashActivity</code>的<code class="highlighter-rouge">Theme</code>来代替上面那种使用<code class="highlighter-rouge">Layout</code>文件的方式。</p>
+
+<p>第一步，先在<code class="highlighter-rouge">res/drawable</code>下面new一个XML。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;layer-list</span>     <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;item</span>
+    <span class="na">android:drawable=</span><span class="s">"@color/gray"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;item&gt;</span>
+<span class="nt">&lt;bitmap</span>
+        <span class="na">android:gravity=</span><span class="s">"center"</span>
+        <span class="na">android:src=</span><span class="s">"@mipmap/ic_launcher"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/item&gt;</span>
+<span class="nt">&lt;/layer-list&gt;</span>
+</code></pre></div></div>
+
+<p>那么，我们久设置好了背景色和一个图片。</p>
+
+<p>第二步，设置splashActivity的主题。找到<code class="highlighter-rouge">styles.xml</code>文件，增加一个新的<code class="highlighter-rouge">Theme</code>：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;resources&gt;
+
+&lt;!-- Base application theme. --&gt;
+&lt;style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"&gt;
+    &lt;!-- Customize your theme here. --&gt;
+&lt;/style&gt;
+
+ &lt;style name="SplashTheme" parent="Theme.AppCompat.NoActionBar"&gt;
+    &lt;item name="android:windowBackground"&gt;@drawable/background_splash&lt;/item&gt;
+&lt;/style&gt;
+&lt;/resources&gt;
+</code></pre></div></div>
+
+<p>主题new好了，那么就设置到<code class="highlighter-rouge">splashActivity</code>就好了。</p>
+
+<p>第三步，我们的splashActivity里面：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class SplashActivity extends AppCompatActivity {
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    Intent intent = new Intent(this, MainActivity.class);
+    startActivity(intent);
+    finish();
+} }
+</code></pre></div></div>
+
+<blockquote>
+  <p>千里之行，始于足下。</p>
+</blockquote>
+
+<p>Source：
+<a href="https://www.bignerdranch.com/blog/splash-screens-the-right-way/">splash-screens-the-right-way</a></p>
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#Android-ref">
+					Android <span>(14)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Splash页面正确实现方式"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=50" class="img-rounded author-image" />
+        <h4 class="section-title author-name">JackLee</h4>
+        <p class="author-bio">One  Developer who love design:)</p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/mac/2016/02/17/how-to-hidden-file-in-OS-X.html" title="How to hide and unhide file in OS X">&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/android/2016/04/25/%E6%AD%A3%E7%A1%AE%E5%88%A4%E6%96%ADapp%E6%98%AF%E5%90%A6%E9%A6%96%E6%AC%A1%E5%90%AF%E5%8A%A8.html" title="正确判断app是否首次启动">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2016 ~ 2018 JackLee with Jekyll. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+

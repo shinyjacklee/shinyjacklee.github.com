@@ -1,0 +1,51 @@
+---
+layout: post
+title:  "正确判断app是否首次启动"
+date:   2016-04-25 
+categories: [Android]
+---
+
+
+Update:
+    嗯，遇到了另外一个问题，就是我们发了一个新版，但是新版的首次启动的导航页几张图片并没有更换，那么，站在UX的角度，这是不需要在展示给用户看的，所以，需求又变化为，改变了才需要展示。
+    嗯，处理的方式是和以前一样，加了一个布尔量做开关，在下面判断的时候：
+
+         private boolean isPicUpdated=false;
+        //compare
+        if (currentVersion > lastVersion&&isPicUpdated) {
+            isFirst = true;
+        } else {
+            isFirst = false;
+        }
+
+----
+  之前一直是用一个isFirstLaunch的布尔量作为判断的，结合sharedPerference做了保存。
+最近做升级的时候发现上面这种方式是存在很大的问题的。
+很简单的道理，升级安装的时候，isFirstLaunch还是false的。所以新的几张导航页面是不会出来的了。
+正确的实践就是：
+读取current的versionCode，然后和lastVersionCode比较，剩下的你都知道了。
+  
+    /**
+     * 查询sharedperference 是否首次启动
+     */
+    private void getStatus() {
+        //getLastVersion
+        int lastVersion = (int) SPUtils.get(ActivitySplash.this, IS_FIRST_LAUNCH_KEY, 0);
+        //getCurrentVersion
+        int currentVersion = 0;
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
+            currentVersion = info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        //compare
+        if (currentVersion > lastVersion) {
+            isFirst = true;
+        } else {
+            isFirst = false;
+        }
+        SPUtils.put(ActivitySplash.this, ActivitySplash.IS_FIRST_LAUNCH_KEY, currentVersion);
+    }
+
+关于为什么splash里面就对sp做写入操作，是因为如果splash页面里面有到快速入口到注册／登录，如果把这写入操作放到导航页最好一页的按钮就会出现下一次还走首次启动的路径了。

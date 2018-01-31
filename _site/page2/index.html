@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>JackLee's blog</title>
+	
+	<meta name="author" content="JackLee">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/shinyjacklee">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			
+			<a class="navbar-brand" href="/">
+				<img src="http://www.gravatar.com/avatar/?s=35" class="img-circle" />
+				JackLee
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=150" />
+	</a>
+	<h3 class="title">
+        <a href="/">JackLee</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	One  Developer who love design:)
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/shinyjacklee">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>JackLee's blog </h1>
+</div>
+
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    April
+    28th,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="/android/2016/04/28/mipmap-vs-drawable.html">mipmap VS drawable</a>
+  </h2>
+
+  <div>
+    
+    
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mipmap/到底是怎么用的？drawable和它有什么区别么？
+</code></pre></div></div>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    April
+    25th,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="/android/2016/04/25/%E6%AD%A3%E7%A1%AE%E5%88%A4%E6%96%ADapp%E6%98%AF%E5%90%A6%E9%A6%96%E6%AC%A1%E5%90%AF%E5%8A%A8.html">正确判断app是否首次启动</a>
+  </h2>
+
+  <div>
+    
+    
+    <p>Update:
+    嗯，遇到了另外一个问题，就是我们发了一个新版，但是新版的首次启动的导航页几张图片并没有更换，那么，站在UX的角度，这是不需要在展示给用户看的，所以，需求又变化为，改变了才需要展示。
+    嗯，处理的方式是和以前一样，加了一个布尔量做开关，在下面判断的时候：</p>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    April
+    14th,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="/android/2016/04/14/Splash%E9%A1%B5%E9%9D%A2%E6%AD%A3%E7%A1%AE%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F.html">Splash页面正确实现方式</a>
+  </h2>
+
+  <div>
+    
+    
+    <p>我们在写开屏启动页面的时候，或许一般都是<code class="highlighter-rouge">setContentView()</code>，然后引用了一个只有一张图片的布局，然后在find到这个<code class="highlighter-rouge">ImageView</code>，然后把图片set上去。最后或许来个延时300ms在跳转到下一个页面。</p>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    February
+    17th,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="/mac/2016/02/17/how-to-hidden-file-in-OS-X.html">How to hide and unhide file in OS X</a>
+  </h2>
+
+  <div>
+    
+    
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>之前在大win下面，做点小花样扰乱一下来达到隐藏某些文件，比如帐号的密码还是很有效果的。可是切换到OS X的时候，发现没有这个选择啊。 搜了一下，不是让你装某软件就是告诉你哪里有破解版 : (
+</code></pre></div></div>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    February
+    15th,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="/%E5%B7%A5%E5%85%B7/2016/02/15/Lost-Command-line-tool.html">How to Install Command Line Tools only in OS X(Without Xcode)</a>
+  </h2>
+
+  <div>
+    
+    
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>How to Install Command Line Tools(CML) in OS X  (Without Xcode)?
+</code></pre></div></div>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    January
+    13th,
+    
+    2016
+  </span>
+
+  <h2>
+    <a href="/%E9%9A%8F%E7%AC%94/2016/01/13/About-programmer-how-to-make-presentation.html">程序员如何做团队内部分享几点建议</a>
+  </h2>
+
+  <div>
+    
+    
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>How to make presentation?
+如何做演讲？这个课题对于开发来说好像一点关系也没有，可是我们确实无法避免，即使我们在外行看来，似乎是木呐呆滞的能一天20H坐那盯着电脑敲代码的猿，但是！！！我们还是得做内部分享的。
+废话就说这些，下面讲讲个人对于#内部分享#这样的小presentation的见解。
+</code></pre></div></div>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    December
+    31st,
+    
+    2015
+  </span>
+
+  <h2>
+    <a href="/%E9%9A%8F%E7%AC%94/2015/12/31/bye-2015-hi-2016.html">Bye2015Hi2016</a>
+  </h2>
+
+  <div>
+    
+    
+    <h3 id="序">序</h3>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    December
+    16th,
+    
+    2015
+  </span>
+
+  <h2>
+    <a href="/%E5%B7%A5%E5%85%B7/android/2015/12/16/MyAndroidDevKit.html">My Software Kit for Android Developing</a>
+  </h2>
+
+  <div>
+    
+    
+    <p>整理出开发环境搭建 <em>2015/12/16</em></p>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    December
+    10th,
+    
+    2015
+  </span>
+
+  <h2>
+    <a href="/%E5%B7%A5%E5%85%B7/2015/12/10/SublimeText2%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%95%B4%E7%90%86.html">SublimeText2快捷键整理</a>
+  </h2>
+
+  <div>
+    
+    
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>是的，掌握快捷键是一个开发者最基本的要求。今天我么要掌握的是sublimeText2的快捷键，不光可以提高便携编辑代码抑或文档的效率，也可以让你很专业，不要老是试图点鼠标。
+</code></pre></div></div>
+
+
+    
+    
+  </div>
+
+</article>
+
+
+<article class="home">
+
+  <span class="post-date">
+    
+    December
+    4th,
+    
+    2015
+  </span>
+
+  <h2>
+    <a href="/android/git/2015/12/04/What-to-ignore-in-android-studio.html">What-to-ignore-in-android-studio</a>
+  </h2>
+
+  <div>
+    
+    
+    <p>Android studio 使用git 来控制版本需要忽略的文件：
+经过检索，一般来说通用的如下：</p>
+
+
+    
+    
+  </div>
+
+</article>
+
+<hr/>
+
+<ul class="pager"> 
+
+  
+  <li class="previous">
+    
+    <a href="/">&larr; Newer</a>
+    
+  </li>
+  
+  
+  <li>
+    <span class="page_number">Page: 2 of 4</span>
+  </li>
+
+  
+  <li class="next">
+    <a href="/page3">Older &rarr;</a>
+  </li>
+  
+
+</ul>
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2016 ~ 2018 JackLee with Jekyll. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+

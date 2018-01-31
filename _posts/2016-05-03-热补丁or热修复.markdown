@@ -1,0 +1,138 @@
+---
+layout: post
+title:  "热更新？热补丁？热修复？"
+date:   2016-05-05
+categories: [Android]
+tag: [andFix]
+---
+	说实话，之前看到标题，就很厉害，甚至也不敢定论到底真的标题该是哪个？ 但是就需求和英文单词来看，直译应该是"热修复"，意译"热补丁"。
+至于"热更新"，那Android Studio的instant run这个feature有一些说法也唤做"热更新"了，QAQ...
+不离题了。
+
+### 背景
+今天要写的方案出现的背景很简单，大家都知道了：
+
+> 如果发布了一个release包，但是里面出现了严重的事故级别(某些等不及下一版本迭代就得修复)的bug，那么站在公司角度，这边QA，开发，客服，甚至PR等部门都得加班赶忙发包重现覆盖，耗费的资源代价相当的大，而出问题的或许只是一两行代码；站在用户User角度，刚刚下载了一个包，准备尝鲜，发现又让更新，是不是很烦，如果新包打开就崩溃了，很多就会去市场评论，“垃圾，更新之后闪退”云云，抑或“垃圾，天天要更新”。
+
+那么有没有一种方案，即使发出了release包，如果出现某些等不及下一版本迭代就得修复的bug，能和网页一样直接这边就能完成，不用像上面那样让用户感觉费事呢。
+有，叫做“HotFix”。
+
+----
+
+### 选型
+搜索了一下，方案有好几个，选型的时候，搜索了一下，收获颇多。
+大致有这么几个：
+
+- Dexposed(from taobao)
+- AndFix (from alipay)
+- ClassLoader(originally from Qzone)
+
+__注：选型时候参考了阿宅的[各大热补丁方案分析和比较](http://blog.zhaiyifan.cn/2015/11/20/HotPatchCompare/)。__
+
+前人栽树，后人乘凉。
+宅神总结如下：    
+
+> Dexposed不支持Art模式（5.0+），且写补丁有点困难，需要反射写混淆后的代码，粒度太细，要替换的方法多的话，工作量会比较大。
+> AndFix支持2.3-6.0，但是不清楚是否有一些机型的坑在里面，毕竟jni层不像java曾一样标准，从实现来说，方法类似Dexposed，都是通过jni来替换方法，但是实现上更简洁直接，应用patch不需要重启。但由于从实现上直接跳过了类初始化，设置为初始化完毕，所以像是静态函数、静态成员、构造函数都会出现问题，复杂点的类Class.forname很可能直接就会挂掉。
+> ClassLoader方案支持2.3-6.0，会对启动速度略微有影响，只能在下一次应用启动时生效，在空间中已经有了较长时间的线上应用，如果可以接受在下次启动才应用补丁，是很好的选择。
+
+>总的来说，在兼容性稳定性上，ClassLoader方案很可靠，如果需要应用不重启就能修复，而且方法足够简单，可以使用AndFix，而Dexposed由于还不能支持art，所以只能暂时放弃，希望开发者们可以改进使它能支持art模式，毕竟xposed的种种能力还是很吸引人的（比如hook别人app的方法拿到解密后的数据，嘿嘿），还有比如无痕埋点啊线上追踪问题之类的，随时可以下掉。
+
+> ClassLoader开源实现有Nuwa, HotFix, DroidFix。
+
+
+好了，那么我们就去github看[AndFix](https://github.com/alibaba/AndFix)然后分析了issue和相关实践的博客,基本上我们的认识应该如下：
+
+1. Dexposed 不支持art，暂时不选了。
+2. andFix : 支持方法级别的修复。
+- 优点：1⃣不需要重启 2⃣支持2.3-6.0 3⃣支持art和dalvik 4⃣轻量
+- 不足：1⃣方法级别的修复，不能完成资源文件的修改替换，不可2⃣由于是调用了JNI层的方法，那么你懂的某些ROM可能会出问题，兼容性稳定性问题
+3. ClassLoader 嗯，稳定性兼容性都很好，1⃣需要启动后生效 2⃣使用了BaseDexClassLoader这个4.0才有的API，so支持4.0+。
+
+--------
+
+### 实现
+
+结合我们的需求，选择了AndFix作为方案,下面就是如何应用AndFix了。
+####实现步骤：
+1. 到build.gradle添加依赖。
+2. 添加jniLibs到*/src/main/目录下。
+3. 到Application里面初始化andFix。
+4. 在正确的地方写上请求patch包的相关逻辑。
+4. 打出老包。
+4. 用apkpatch工具,修复bug，打patch包。
+5. 传输并应用patch包，完成bug修复。
+
+
+-----
+####QA环节：
+
+1. 关于加固怎么说？
+	答：可以加固的，爱加密的方案验证没问题，方法是：使用new.apk生成差异补丁，然后在对old.apk加固，之后在用加固后的apk去加载补丁。
+2.  关于安全性怎么说？
+	答：The following is important but out of AndFix's range.
+verify the signature of patch file检查签名
+verify the fingerprint of optimize file检查指纹
+3. 关于混淆怎么说？
+	答： 第一次打old.apk的时候混淆是如下方式写的
+
+
+	    -keep class * extends java.lang.annotation.Annotation
+	-keepclasseswithmembernames class * {
+	native ;
+	}	
+	-keep class com.alipay.euler.andfix.** {;}
+	-printmapping build/outputs/mapping/mapping.txt
+然后打new.apk的时候
+
+	-keep class * extends java.lang.annotation.Annotation
+	-keepclasseswithmembernames class * {
+	native ;
+	}
+	-keep class com.alipay.euler.andfix.* {*;}
+	-applymapping mapping.txt
+[》参考此issue](https://github.com/alibaba/AndFix/issues/153)
+4. 关于打包的时候报错：UnsatisfiedLinkError: Native method not found: com.alipay.euler.andfix.AndFix.setup
+	答：是so包没有找到，兜了一圈，找到某同学挖出来的[andFix's So包大全](https://github.com/LuoboDcom/AndFix-so-)，现在AndFix自己页加上了libs，然后在`*/src/main/`路径下新建一个`jniLibs/`文件夹，拷贝这个so包库到这里就好了：
+比如我的是：`/Users/userName/projectName/app/src/main/jniLibs` 。
+5. 关于打patch包的时候，报错： _command not found : apkpatch_
+	答： 把keyStore文件＋新&&老的apk文件都放到抓下来的目录里面，然后cd到`apkpatch-1.0.3/`下面：
+照着规范输入`./apkpatch.sh XXXX`，解释一下命令行就是from new.apk to old.apk -keyStore  yourKeyStore.jks -password *** -alias XXX -outputDir XXX 这样是不是可读性高了。然后就打出了漂亮的结果，会告诉你在那个类的哪个方法
+做了啥。好了，patch包就打出来了。
+6. 然后呢？
+	答： 然后就是把patch包push到你写的路径下面，这个路径要和在application里面`addPatch(mPatchPath)`对应，patch包我们写demo 的流程就是push到sdcard里面了，然后呢`adb install -r old.apk`,把老的包在安装一遍(为了走application的onCreate()执行loadPatch()逻辑)，然后启动你就会发现你改动的方法生效了。
+7. 好了，你还有问题？
+	答： 嗯，去github项目下[issue](https://github.com/alibaba/AndFix/issues)里面搜索。基本上就可以了。
+8. 哦关于MutilDex的事情？
+	答： 呵呵，暂时需要自己搞一下，andFix官方的apkPatch不支持，不过有同学实现了，issue里面有彩蛋。
+	好吧，不卖关子了，[w4lle的实现](http://w4lle.github.io/2016/03/13/AndFix%E6%94%AF%E6%8C%81multidex%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/)
+
+
+----
+
+实现的时候参考的资料：
+
+- 原理篇[w4lle's Android热补丁之AndFix原理解析](http://w4lle.github.io/2016/03/03/Android%E7%83%AD%E8%A1%A5%E4%B8%81%E4%B9%8BAndFix%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/)
+- demo篇[程序亦非猿's andFixDemo](https://github.com/AlanCheen/AndFixDemo)
+- cookBook篇[AndFix使用说明](http://www.jianshu.com/p/479b8c7ec3e3)
+
+------
+嗯，Thx github,Thx OpenSource.
+
+
+
+
+
+
+
+
+
+	
+ 
+
+
+
+
+
+	
+
