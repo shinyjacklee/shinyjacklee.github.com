@@ -3,7 +3,7 @@ layout: post
 title:  "Activity生命周期和启动模式"
 date:   2015-11-12 
 categories: [Android]
-tags: [Activity,生命周期]
+tags: [Activity,LifeCycle]
 ---
 
 1.关于生命周期

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Jenkins持续集成工具使用记录</title>
+	
+	<meta name="author" content="JackLee">
+
+	<!-- Enable responsive viewport -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le styles -->
+	<link href="/assets/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/assets/resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/assets/resources/syntax/syntax.css" rel="stylesheet">
+	<link href="/assets/css/style.css" rel="stylesheet">
+
+	<!-- Le fav and touch icons -->
+	<!-- Update these with your own images
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+	-->
+
+	<link rel="alternate" type="application/rss+xml" title="" href="/feed.xml">
+</head>
+
+<body>
+	<nav class="navbar navbar-default visible-xs" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a type="button" class="navbar-toggle nav-link" href="http://github.com/shinyjacklee">
+				<i class="fa fa-github"></i>
+			</a>
+			
+			
+			
+			<a class="navbar-brand" href="/">
+				<img src="http://www.gravatar.com/avatar/?s=35" class="img-circle" />
+				JackLee
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="/categories.html">Categories</a></li>
+				<li><a href="/tags.html">Tags</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<!-- nav-menu-dropdown -->
+	<div class="btn-group hidden-xs" id="nav-menu">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			<i class="fa fa-bars"></i>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			<li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+			<li><a href="/categories.html"><i class="fa fa-folder"></i>Categories</a></li>
+			<li><a href="/tags.html"><i class="fa fa-tags"></i>Tags</a></li>
+			<li class="divider"></li>
+			<li><a href="#"><i class="fa fa-arrow-up"></i>Top of Page</a></li>
+		</ul>
+	</div>
+
+	<div class="col-sm-3 sidebar hidden-xs" style="">
+		<!-- sidebar.html -->
+<header class="sidebar-header" role="banner">
+	<a href="/">
+		<img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=150" />
+	</a>
+	<h3 class="title">
+        <a href="/">JackLee</a>
+    </h3>
+</header>
+
+
+<div id="bio" class="text-center">
+	One  Developer who love design:)
+</div>
+
+
+<div id="contact-list" class="text-center">
+	<ul class="list-unstyled list-inline">
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="https://github.com/shinyjacklee">
+				<i class="fa fa-github-alt fa-lg"></i>
+			</a>
+		</li>
+		
+		
+		
+	</ul>
+	<ul id="contact-list-secondary" class="list-unstyled list-inline">
+		
+		
+		<li>
+			<a class="btn btn-default btn-sm" href="/">
+				<i class="fa fa-rss fa-lg"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- sidebar.html end -->
+
+	</div>
+
+	<div class="col-sm-9 col-sm-offset-3">
+		<div class="page-header">
+  <h1>Jenkins持续集成工具使用记录 </h1>
+</div>
+	
+<article>
+
+	<div class="col-sm-10">
+	 <span class="post-date">
+	   
+	   June 
+	   21st,
+	     
+	   2016
+	 </span>
+	  <div class="article_body">
+	  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>折腾了两天，把Jenkins持续集成工具调试好了，优化了整个app测试的流程,记录一下。(2016/6/21) update: 嗯，推广全组应用的时候牵涉到了安全问题，补上Jenkins的安全机制。（2016/6/23）	
+</code></pre></div></div>
+
+<hr />
+
+<h3 id="背景说明">背景说明</h3>
+<p>前几天看到了一篇博客，<a href="http://avnpc.com/pages/android-auto-deploy-workflow-on-travis-ci">基于Travis CI搭建Android自动打包发布工作流（支持Github Release及fir.im)</a>，直击做Android开发的痛点。</p>
+
+<blockquote>
+  <p>未自动化前安卓开发总是避免不了这样的工作流程：</p>
+</blockquote>
+
+<blockquote>
+  <ol>
+    <li>开发一些新功能，提交代码</li>
+    <li>完成一部分功能后，打包一个测试版APK</li>
+    <li>将测试版APK上传到QQ群 / 网盘 / Fir.im / 蒲公英等</li>
+    <li>在QQ群或发布平台解释当前版本所完成的功能</li>
+    <li>通知测试人员测试</li>
+  </ol>
+</blockquote>
+
+<blockquote>
+  <p>实现了这套自动化发布后，工作流程被简化成：</p>
+</blockquote>
+
+<blockquote>
+  <ol>
+    <li>开发新功能，提交代码</li>
+    <li>通过git tag对代码打一个内测版的tag，在tag的描述中对写当前完成的功能</li>
+  </ol>
+</blockquote>
+
+<p>是的，光是看到这个引言就很兴奋了，然而，对于free的产品用惯了码农来说，或许不算完美的方案 : |
+然后和同事以及朋友沟通了一圈，找到了<code class="highlighter-rouge">Jenkins</code>这个方案，也是一种持续集成工具。调试通过了，我们也实现了如下的工作流改进：</p>
+
+<blockquote>
+  <ol>
+    <li>写好了代码，提交到<code class="highlighter-rouge">gitlab</code></li>
+    <li>Jenkins自动抓取配置好的目标分支的代码, 自动调用Gradle脚本打包，然后fir.im自动上传apk包，发邮件通知测试组。</li>
+  </ol>
+</blockquote>
+
+<p>不逼逼了，直接上踩坑的过程吧。（我们的workflow是Jenkins＋gitlab＋fir.im+email）</p>
+
+<hr />
+
+<h3 id="实现过程">实现过程</h3>
+
+<p>1.<a href="https://jenkins.io/index.html">当然是下载Jenkins啦</a>
+(如果没有说明基本上，我的环境是OS X)</p>
+
+<p>这里遇到第一个坑是：下载选择了OS X 之后会给你一个<strong>.pkg</strong>文件，60+M，然后点击这个installer安装的时候,强制安装到共享文件夹（所有用户可以访问）,这个导致我配置的一些东西，外部用户获取不到。
+然后破解的方案是：直接默认那个<strong>.war</strong>文件，大小一样的，下好了之后，双击一下就好了（是的，就好了，没有给任何安装好或者失败的反馈）。你打开<strong>localhost:8080</strong>会看到Jenkins服务开始初始化启动了。</p>
+
+<p>2.Step2是按照各种搜到的Tutorial说明的安装好插件：</p>
+
+<p><strong>系统管理－管理插件－可选插件</strong> 里搜索<code class="highlighter-rouge">git plugin</code>、<code class="highlighter-rouge">Gradle plugin</code>、<code class="highlighter-rouge">Email Extension Plugin</code>~~~~ 、<code class="highlighter-rouge">fir-plugin</code>，各个插件会在下面配置的时候说明解释。</p>
+
+<p>3.新建你的Jenkins自动build的项目：</p>
+
+<p>回到Jenkins主页，找到左侧最上面的<strong>新建</strong>,在跳出来的对话框中输入项目名称，风格选择<strong>自由风格</strong>，然后<strong>OK</strong>即可。</p>
+
+<p>4.git的配置</p>
+
+<p>前面说了，我们的架构是Jenkins＋gitlab＋fir.im+email，所以详细配置的第一步就是<strong>源码管理</strong>选择<code class="highlighter-rouge">git</code>，输入你的gitlab里面<strong>repo</strong>的<strong>URL</strong>地址，然后就是添加私钥了，<strong>Credentials-Add</strong>在弹出的对话框里面配置你的私钥，对的，是<strong>privateKey</strong>,打开terminal:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~ //到根目录
+.ssh //到.ssh目录
+ll //列出你的**sshKey**
+</code></pre></div></div>
+
+<p>然后找到你在gitlab上配置的公钥对应的那个私钥,如：我的是<strong>id_rsa.pub</strong>提交到gitlab的ssh的，那么就把<strong>id_rsa</strong>打开(open -e id_rsa)复制粘贴到那个弹出的对话框<strong>Private Key</strong>里面.</p>
+
+<p>5.构建触发器的配置</p>
+
+<p>选择<strong>PollSCM</strong>然后键入<code class="highlighter-rouge">* * * * *</code>意思是每分钟都自动拉取一下gitlab的代码（监听是否有提交，有则执行自动构建任务，用空格或者tab间隔开，如果你觉得太高了不好，那么每小时的第5分钟（0:05–1:05–2:05–…）拉一下？<code class="highlighter-rouge">H/5 * * * *</code>，对于这五个字符的解释:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>**MINUTE**分(0-59)
+**HOUR**时(0-23)
+**DOM**一个月的某一天 (*day of month*)，(1-31)
+**MONTH**12个月中某个月(1-12)
+**DOW**一周的某一天(*day of week*)(0-7,7是Sunday)
+</code></pre></div></div>
+
+<p>详细的:</p>
+<blockquote>
+  <p>This field follows the syntax of cron (with minor differences). Specifically, each line consists of 5 fields separated by TAB or whitespace:
+MINUTE HOUR DOM MONTH DOW
+MINUTE
+Minutes within the hour (0–59)
+HOUR
+The hour of the day (0–23)
+DOM
+The day of the month (1–31)
+MONTH
+The month (1–12)
+DOW
+The day of the week (0–7) where 0 and 7 are Sunday.
+To specify multiple values for one field, the following operators are available. In the order of precedence,
+	•	* specifies all valid values
+	•	M-N specifies a range of values
+	•	M-N/X or */X steps by intervals of X through the specified range or whole valid range
+	•	A,B,…,Z enumerates multiple values
+To allow periodically scheduled tasks to produce even load on the system, the symbol H (for “hash”) should be used wherever possible. For example, using 0 0 * * * for a dozen daily jobs will cause a large spike at midnight. In contrast, using H H * * * would still execute each job once a day, but not all at the same time, better using limited resources.
+The H symbol can be used with a range. For example, H H(0-7) * * * means some time between 12:00 AM (midnight) to 7:59 AM. You can also use step intervals with H, with or without ranges.
+The H symbol can be thought of as a random value over a range, but it actually is a hash of the job name, not a random function, so that the value remains stable for any given project.
+Beware that for the day of month field, short cycles such as */3 or H/3 will not work consistently near the end of most months, due to variable month lengths. For example, */3 will run on the 1st, 4th, …31st days of a long month, then again the next day of the next month. Hashes are always chosen in the 1-28 range, so H/3 will produce a gap between runs of between 3 and 6 days at the end of a month. (Longer cycles will also have inconsistent lengths but the effect may be relatively less noticeable.)
+Empty lines and lines that start with # will be ignored as comments.
+In addition, @yearly, @annually, @monthly, @weekly, @daily, @midnight, and @hourly are supported as convenient aliases. These use the hash system for automatic balancing. For example, @hourly is the same as H * * * * and could mean at any time during the hour.@midnight actually means some time between 12:00 AM and 2:59 AM.
+Examples:</p>
+  <h3 id="every-fifteen-minutes-perhaps-at-07-22-37-52">every fifteen minutes (perhaps at :07, :22, :37, :52)</h3>
+  <p>H/15 * * * *(每十五分钟)</p>
+  <h3 id="every-ten-minutes-in-the-first-half-of-every-hour-three-times-perhaps-at-04-14-24">every ten minutes in the first half of every hour (three times, perhaps at :04, :14, :24)</h3>
+  <p>H(0-29)/10 * * * *（每隔10分钟在每个小时的前半小时）</p>
+  <h3 id="once-every-two-hours-every-weekday-perhaps-at-938-am-1138-am-138-pm-338-pm">once every two hours every weekday (perhaps at 9:38 AM, 11:38 AM, 1:38 PM, 3:38 PM)</h3>
+  <p>H 9-16/2 * * 1-5（周一到周五每隔2小时，范围在9点到16点）</p>
+  <h3 id="once-a-day-on-the-1st-and-15th-of-every-month-except-december">once a day on the 1st and 15th of every month except December</h3>
+  <p>H H 1,15 1-11 *(1月到11月，每个月的1号和15号，每天一次)</p>
+</blockquote>
+
+<p>build的频率什么的视自己需求写吧。</p>
+
+<p>6.<strong>构建</strong></p>
+
+<p>配置Gradle来完成build。这一步折腾了许久，最后试出了两个方案：</p>
+
+<p><strong>方案一</strong></p>
+
+<p>先说上面的Gradle script吧。是不是发现你在Gradle version除了选择default没有其它选择，是的，没错！因为你还没有配置其它的。先保存一下。打开terminal</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>touch .bash_profile
+open -e .bash_profile		
+</code></pre></div></div>
+
+<p>在打开的.bash_profile文件中 增加:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PATH=/Users/yourUserName/.gradle/wrapper/dists/gradle-2.10-all/乱七八糟一串/gradle-2.10/bin:$PATH
+</code></pre></div></div>
+
+<p>gradle的环境变量配置好了之后，<code class="highlighter-rouge">source  .bash_profile</code>一下就能在terminal 键入<code class="highlighter-rouge">gradle</code>了,这个和配置adb 工具一样，不然就是cmd not found报错了。</p>
+
+<p>回到Jenkins主页上了，找到<strong>系统设置</strong>然后拉下找到<strong>Gradle</strong>，点击一下Gradle安装，新增Gradle，起个名字<strong>gradleV2.10</strong>,GRADLE-HOME里面填写刚刚配置的那个<strong>Users/yourUserName/.gradle/wapper/dists/gradle-2.10-all/乱七八糟一串/gradle-2.10</strong>这样就好了，替换好你对应的路径键入这一串就好了。</p>
+
+<p>然后再回到你的项目的配置构建－Invoke Gradle 这个时候在Gradle version就可以下拉spinner了，里面会看到你上面配置的那个<strong>gradleV2.10</strong>这个，Good，然后<strong>switch</strong>里面写个clean， <strong>tasks</strong> 里面写个build。（以后如果嫌build的速度慢了，那么不要填clean就好了，那就几秒就好了）</p>
+
+<p>尝试构建一下，看看是不是有什么问题。</p>
+
+<p>可能会遇到一个缺失了sdk的，到as工程里面找到local.properties 文件，复制到Jenkins抓的gitlab那个workspace里面的项目的正确路径下面就好了。原因是因为，团队协作的时候，把这个文件放到了<code class="highlighter-rouge">git ignore</code>里面的，因为每个人的路径不一样，编译会报错，所以Jenkins抓项目的时候没有抓到这个配置编译就报错了。</p>
+
+<p><strong>方案二</strong></p>
+
+<p>构建直接选择<strong>Execute shell</strong>，在command里面写</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> source .bash_profile //这个是防止你.bash_profile每次都要source一下
+ gradle clean build 
+</code></pre></div></div>
+
+<p>和方案一效果一样。</p>
+
+<p>7.配置fir.im</p>
+
+<p>如果前面构建没有问题了，那么进入下一步，自动上传编译好的apk包到fir.im。如果已经安装好了fir.im的插件，那么<strong>增加构建后步骤－Upload to fir.im</strong>,在配置表单里面填写你的token，就是你在fir.im 里面自己帐户下面的token，然后如果有需要，改一下<strong>Build Notes</strong>，这个就是你那个显示在fir.im二维码页面的日志。保存一下，在build一下，看看是不是自动上传到了fir。</p>
+
+<p>8.如果前面都做好了，就差最后一步，发邮件了。</p>
+
+<p>好了，我们找到<strong>Jenkins－系统设置</strong>,下拉到JenkinsLocation 填写一下系统管理员邮件地址，OK，然后找到 <strong>Extended Email Notification</strong>填表单吧，SMTP 服务器填你的邮件的smtp服务器，然后点高级，里面填好用户名、密码、SMTP端口号,然后那个默认内容类型选择HTML，然后继续填表单，填写默认收件人（我们的是测试组），默认邮件标题，默认内容，填好了保存一下。
+可以了，我们去配置邮件模版。<strong>Jenkins－ EditableEmailNotificationTemplates</strong>，填表单喽:</p>
+
+<p>模板的name,描述，默认收件人列表，默认邮件回复接受者，内容类型，默认主题，默认内容，可以了submit提交一下。</p>
+
+<p>我们的默认内容是抓了fir.im 的html代码，大致如下：</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>XXX项目测试包# $BUILD_NUMBER
+http://fir.im/xxx
+&lt;img ......&gt;//这个标签是fir.im 的html代码里面那个二维码的代码，抠下来就用了。
+</code></pre></div></div>
+
+<p>The end.</p>
+
+<hr />
+<p>Update:</p>
+
+<p>为了全组使用，势必要允许外部的访问，这就催生了需要应用Jenkins的安全机制的需求。</p>
+
+<ol>
+  <li>外部如何访问配置好的Jenkins呢？</li>
+</ol>
+
+<p>答： 直接输入你的内网IP地址加上端口号即可。即，外部用户打开浏览器，直接输入http://XX.XX.XX.XX:8080/ 即可进入你的Jenkins服务器了。</p>
+<ol>
+  <li>为了安全（非必要人员进入Jenkins），加上权限管理安全分组机制：</li>
+</ol>
+
+<p>path: <strong>Jenkins</strong>-<strong>Configure Global Security</strong></p>
+<blockquote>
+
+  <ol>
+    <li><strong>启用安全勾选</strong></li>
+    <li><strong>安全域－选择Jenkins专有数据库</strong>－勾选允许用户注册</li>
+    <li><strong>授权策略－安全矩阵</strong>： 未添加之前是有一个匿名用户的，在下面找到添加用户/组键入你要new的用户名，然后在上面的表里面勾选权限即可。例如： 键入admin，然后点击<strong>添加按钮</strong>,好了之后会出现在上面用户表里面，分配权限Administrator。即有了管理员权限了。可以给匿名用户选上Read只读。类推分配你的队友吧。</li>
+    <li>OK，安全机制初步够用了。完。</li>
+  </ol>
+</blockquote>
+
+<hr />
+<p>Update: 2016/08</p>
+
+<h3 id="如何重启jenkins服务">如何重启Jenkins服务</h3>
+
+<blockquote>
+  <p>安装<code class="highlighter-rouge">Safe Restart Plugin</code> 插件，如果不高兴折腾CLI的话。</p>
+</blockquote>
+
+<hr />
+
+<h3 id="总结">总结</h3>
+
+<p>按照需求来，一个个的解决问题，中途踩坑的内容包括：</p>
+
+<ol>
+  <li>卡在gradle 配置那段，里面环境变量什么的配置出错。</li>
+  <li>就是fir.im的深坑了，本来是想用命令行直接掉了fir-cli那个脚本的，后来死在了gems无法在OS X里面随便动lib的坑，无法安装那个fir-cli，然后折腾了什么rvm。</li>
+  <li>邮件的事情，其一是密码啊密码啊密码啊，其二是要理顺<strong>邮件通知</strong>和<strong>extendedEmailNotification插件</strong>的区别。一个是Jenkins自己的，一个是三方插件，配置好了三方的，哪里能用自带的发送测试邮件呢？哦对了还有一个fir.im上传好了也会发邮件，我们fir的邮件列表是android团队。jenkins里面那个默认只写了测试组。另外需要注意一下，trigger，build失败发给dev,success发给测试组。</li>
+  <li>完。</li>
+</ol>
+
+<hr />
+<p>参考了的比较好的资料推荐如下：</p>
+
+<ul>
+  <li><a href="http://jayfeng.com/2015/10/22/%E4%BD%BF%E7%94%A8jenkins%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%84%E5%BB%BAandroid%E5%92%8Cios%E5%BA%94%E7%94%A8/">使用jenkins自动化构建android和ios应用
+</a></li>
+  <li><a href="http://my.oschina.net/uboluo/blog/157483">Jenkins+Gradle实现android开发持续集成、打包</a></li>
+</ul>
+
+
+	  </div>
+
+		
+		<ul class="tag_box list-unstyled list-inline">
+		  <li><i class="fa fa-folder-open"></i></li>
+		  
+		  
+			 
+				<li><a href="/categories.html#DevTool-ref">
+					DevTool <span>(6)</span>
+					
+				</a></li>
+			
+		  
+		</ul>
+		  
+
+		
+		<ul class="list-inline">
+		  <li><i class="fa fa-tags"></i></li>
+		  
+		  
+			 
+				<li>
+					<a href="/tags.html#Jenkins-ref">
+					Jenkins <span>(1)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#CI-ref">
+					CI <span>(1)</span>
+					,
+					</a>
+				</li>
+			 
+				<li>
+					<a href="/tags.html#workflow-ref">
+					workflow <span>(1)</span>
+					
+					</a>
+				</li>
+			
+		  
+		  
+		</ul>
+		  
+
+		<hr>
+
+		<div>
+      <section class="share col-sm-6">
+        <h4 class="section-title">Share Post</h4>
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=Jenkins持续集成工具使用记录"
+           onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+          <i class="fa fa-twitter fa-lg"></i>
+          Twitter
+        </a>
+        <a class="btn btn-default btn-sm facebook" href="https://www.facebook.com/sharer/sharer.php"
+           onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+          <i class="fa fa-facebook fa-lg"></i>
+          Facebook
+        </a>
+        <a class="btn btn-default btn-sm gplus"
+           onclick="window.open('https://plus.google.com/share?url='+window.location.href, 'google-plus-share', 'width=490,height=530');return false;">
+          <i class="fa fa-google-plus fa-lg"></i>
+          Google+
+        </a>
+      </section>
+
+      <section class="col-sm-6 author">
+        <img src="https://avatars3.githubusercontent.com/u/9441660?v=3&s=50" class="img-rounded author-image" />
+        <h4 class="section-title author-name">JackLee</h4>
+        <p class="author-bio">One  Developer who love design:)</p>
+      </section>
+    </div>
+
+    <div class="clearfix"></div>
+
+		<ul class="pager">
+		  
+		  <li class="previous"><a href="/android/2016/05/24/%E9%80%82%E9%85%8DAndroid5.0%E4%B9%8B%E5%90%8E%E7%9A%84%E9%80%9A%E7%9F%A5.html" title="适配Android5.0之后的通知">&larr; Previous</a></li>
+		  
+		  
+		  <li class="next"><a href="/life/2016/07/05/%E7%94%9F%E6%B4%BB%E6%9C%89%E6%84%9F.html" title="生活有感">Next &rarr;</a></li>
+		  
+		</ul>
+
+		<hr>
+	</div>
+	
+	<div class="col-sm-2 sidebar-2">
+	
+	</div>
+</article>
+<div class="clearfix"></div>
+
+
+
+
+
+		<footer>
+			<hr/>
+			<p>
+				&copy; 2015 ~ 2018 JackLee with Jekyll. Theme: <a href="https://github.com/dbtek/dbyll">dbyll</a> by dbtek.
+			</p>
+		</footer>
+	</div>
+
+	<script type="text/javascript" src="/assets/resources/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/assets/resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/app.js"></script>
+</body>
+</html>
+
+
+

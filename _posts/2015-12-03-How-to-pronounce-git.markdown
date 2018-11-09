@@ -2,7 +2,7 @@
 layout: post
 title:  "How to pronounce 'git' "
 date:   2015-12-03 
-categories: [随笔]
+categories: [Misc]
 ---
 
 I meet many people who pronounce "git"? jit : get ...

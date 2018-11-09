@@ -2,7 +2,7 @@
 layout: post
 title:  "Tasks 2015 Next Half Year"
 date:   2015-09-01 
-categories: [学习-计划]
+categories: [Misc]
 ---
 
 How time flies

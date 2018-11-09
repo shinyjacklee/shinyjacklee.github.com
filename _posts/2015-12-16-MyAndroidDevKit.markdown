@@ -2,8 +2,8 @@
 layout: post
 title:  "My Software Kit for Android Developing"
 date:   2015-12-16 
-categories: [工具,Android]
-tags: [开发环境]
+categories: [DevTool,Android]
+
 ---
 
   整理出开发环境搭建 _2015/12/16_

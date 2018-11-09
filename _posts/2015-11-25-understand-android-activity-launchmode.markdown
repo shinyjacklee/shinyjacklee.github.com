@@ -3,7 +3,7 @@ layout: post
 title:  "理解Android启动模式"
 date:   2015-11-25 
 categories: [Android]
-tags: [启动模式,Activity]
+tags: [LaunchMode,Activity]
 ---
 Activity是Android系统最杰出的组件之一,从Activity众所周知的在允许多任务在绝大多数手机运行良好的内存管理方面的良好架构可以看出来了。
 

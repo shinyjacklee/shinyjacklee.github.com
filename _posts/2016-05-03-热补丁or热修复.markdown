@@ -3,7 +3,7 @@ layout: post
 title:  "热更新？热补丁？热修复？"
 date:   2016-05-05
 categories: [Android]
-tag: [andFix]
+tag: [AndFix]
 ---
 	说实话，之前看到标题，就很厉害，甚至也不敢定论到底真的标题该是哪个？ 但是就需求和英文单词来看，直译应该是"热修复"，意译"热补丁"。
 至于"热更新"，那Android Studio的instant run这个feature有一些说法也唤做"热更新"了，QAQ...

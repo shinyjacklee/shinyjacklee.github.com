@@ -2,7 +2,7 @@
 layout: post
 title:  "关于各种开源许可License"
 date:   2016-08-30 
-categories: [随笔]
+categories: [Misc]
 ---
 
 问题很简单，每次阅读代码，发现遇到的开源许可不太一样，不明觉厉。

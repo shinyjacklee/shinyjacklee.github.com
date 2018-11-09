@@ -2,10 +2,10 @@
 layout: post
 title:  "Bye2015Hi2016"
 date:   2015-12-31 
-categories: [随笔]
-tags:  [年末总结]
+categories: [Misc]
+
 <!-- fullview: true -->
-comments: true
+
 ---
 
 ### 序

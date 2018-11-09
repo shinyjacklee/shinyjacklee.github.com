@@ -2,7 +2,7 @@
 layout: post
 title:  "Bookshelf 2015 "
 date:   2015-08-31 
-categories: [学习-计划]
+categories: [Learning]
 ---
 Yeah,if you know you are ugly,then you do some reading,that's why am here.
 

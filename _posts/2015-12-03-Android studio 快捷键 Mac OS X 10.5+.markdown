@@ -2,8 +2,8 @@
 layout: post
 title:  "Android studio 快捷键 Mac OS X 10.5+"
 date:   2015-12-03 
-categories: [工具]
-tags: [Android Studio,快捷键,Mac]
+categories: [DevTool]
+tags: [Android Studio,shortcut,Mac]
 
 ---
     首先上一遍高频的符号和对应的键位

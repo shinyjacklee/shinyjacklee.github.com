@@ -3,7 +3,7 @@ layout: post
 title:  "CircleProgressView in my eyes"
 date:   2015-10-12 
 categories: [Android]
-tags: [自定义view]
+
 ---
 Recently i released one ___[CircleProgressView](https://github.com/jackL-e-e/CircleProgressView)___ with dot and dash effect  in my github .
 Here i wanna make some explain about this view.

@@ -2,8 +2,8 @@
 layout: post
 title:  "SublimeText2快捷键整理"
 date:   2015-12-10 
-categories: [工具]
-tag: [快捷键,sublimeText2,Mac]
+categories: [DevTool]
+tag: [shortcut,sublimeText2,Mac]
 ---
 	是的，掌握快捷键是一个开发者最基本的要求。今天我么要掌握的是sublimeText2的快捷键，不光可以提高便携编辑代码抑或文档的效率，也可以让你很专业，不要老是试图点鼠标。
 

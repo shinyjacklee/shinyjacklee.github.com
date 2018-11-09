@@ -3,7 +3,7 @@ layout: post
 title:  "Android Animation Digest"
 date:   2015-09-14 
 categories: [Android]
-tags: [animation]
+tags: [Animation]
 ---
 
 已经初步完成了动画的学习。

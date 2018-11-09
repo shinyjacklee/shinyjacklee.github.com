@@ -2,7 +2,7 @@
 layout: post
 title:  "My First Essay"
 date:   2015-08-28 
-categories: [随笔]
+categories: [Misc]
 ---
 The thing is there are so many skills needed to learn **to make my life easier** 
 and many works needed to be done 

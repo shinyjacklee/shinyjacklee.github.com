@@ -2,8 +2,8 @@
 layout: post
 title:  "Jenkins持续集成工具使用记录"
 date:   2016-06-21 
-categories: [工具]
-tags: [Jenkins,持续集成,workflow]
+categories: [DevTool]
+tags: [Jenkins,CI,workflow]
 ---
 
 	折腾了两天，把Jenkins持续集成工具调试好了，优化了整个app测试的流程,记录一下。(2016/6/21)

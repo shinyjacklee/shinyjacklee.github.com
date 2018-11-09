@@ -2,7 +2,7 @@
 layout: post
 title:  "What i am doing now"
 date:   2015-10-10 
-categories: [随笔]
+categories: [Misc]
 ---
 I am living a hard life now.
 

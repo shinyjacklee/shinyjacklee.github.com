@@ -2,8 +2,8 @@
 layout: post
 title:  "How to hide and unhide file in OS X"
 date:   2016-02-17
-categories: [Mac]
-tags: [隐藏文件,Mac]
+categories: [DevTool]
+
 ---
 	之前在大win下面，做点小花样扰乱一下来达到隐藏某些文件，比如帐号的密码还是很有效果的。可是切换到OS X的时候，发现没有这个选择啊。
 搜了一下，不是让你装某软件就是告诉你哪里有破解版 : (

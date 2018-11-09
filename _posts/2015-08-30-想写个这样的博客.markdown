@@ -2,8 +2,9 @@
 layout: post
 title:  "想写个这样的博客"
 date:   2015-08-30 
-categories: [学习-计划]
-tag: [计划]
+categories: [Misc]
+
+
 ---
 >  **to make my life easier** 
 

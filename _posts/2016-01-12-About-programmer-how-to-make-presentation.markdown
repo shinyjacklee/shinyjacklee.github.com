@@ -2,8 +2,8 @@
 layout: post
 title:  "程序员如何做团队内部分享几点建议"
 date:   2016-1-13 
-categories: [随笔]
-tags: [团队分享]
+categories: [Misc]
+
 ---
 
 	How to make presentation?

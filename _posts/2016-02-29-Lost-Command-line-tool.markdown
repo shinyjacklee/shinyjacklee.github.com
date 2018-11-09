@@ -2,8 +2,8 @@
 layout: post
 title:  "How to Install Command Line Tools only in OS X(Without Xcode)"
 date:   2016-02-15
-categories: [工具]
-tags: [commandLineTool,搭建环境]
+categories: [DevTool]
+
 ---
 	How to Install Command Line Tools(CML) in OS X  (Without Xcode)?
 	
