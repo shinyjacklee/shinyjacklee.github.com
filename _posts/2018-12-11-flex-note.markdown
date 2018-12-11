@@ -1,0 +1,29 @@
+---
+layout: post
+title:  "flex-note"
+date:   2018-12-11 
+categories: [web]
+tag: [flex]
+---
+
+Flex 属性全览笔记
+* justify-content: `flex-start`/`flex-end` `center` `space-around`/`space-between` (一般为横向）
+* align-items：`flex-start`/`flex-end`  `center` `baseline` `stretch` （一般为纵向）
+* ⚠️reverse 的时候，start end也会倒过来的。
+* flex-direction ：`row` `row-reverse` `column` `column-reverse` 方向
+* order:顺序 参数int 
+* align-self  __单个item__，非group
+* flex-wrap: `wrap` `nowrap`   `wrap-reverse`
+* flex-flow=flex-direction+flex-wrap;    
+    *eg：  flex-flow: row wrap;*
+* align-content __整个group__ : `flex-start`/`end` `center`  `space-between`/`space-around` `stretch`
+
+
+
+⚠️reverse 的时候，start end也会倒过来的。
+
+学习地址：http://flexboxfroggy.com/
+ 
+
+
+

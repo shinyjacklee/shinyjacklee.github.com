@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>ssh-and-git-account</title>
+	<title>flex-note</title>
 	
 	<meta name="author" content="JackLee">
 
@@ -123,7 +123,7 @@
 
 	<div class="col-sm-9 col-sm-offset-3">
 		<div class="page-header">
-  <h1>ssh-and-git-account </h1>
+  <h1>flex-note </h1>
 </div>
 	
 <article>
@@ -131,62 +131,29 @@
 	<div class="col-sm-10">
 	 <span class="post-date">
 	   
-	   January 
-	   31st,
-	     
+	   December 
+	   11th,
+	   
 	   2018
 	 </span>
 	  <div class="article_body">
-	  <p>多设备免登陆和多账号在不同项目中自动切换配置。</p>
+	  <p>Flex 属性全览笔记</p>
+<ul>
+  <li>justify-content: <code class="highlighter-rouge">flex-start</code>/<code class="highlighter-rouge">flex-end</code> <code class="highlighter-rouge">center</code> <code class="highlighter-rouge">space-around</code>/<code class="highlighter-rouge">space-between</code> (一般为横向）</li>
+  <li>align-items：<code class="highlighter-rouge">flex-start</code>/<code class="highlighter-rouge">flex-end</code>  <code class="highlighter-rouge">center</code> <code class="highlighter-rouge">baseline</code> <code class="highlighter-rouge">stretch</code> （一般为纵向）</li>
+  <li>⚠️reverse 的时候，start end也会倒过来的。</li>
+  <li>flex-direction ：<code class="highlighter-rouge">row</code> <code class="highlighter-rouge">row-reverse</code> <code class="highlighter-rouge">column</code> <code class="highlighter-rouge">column-reverse</code> 方向</li>
+  <li>order:顺序 参数int</li>
+  <li>align-self  <strong>单个item</strong>，非group</li>
+  <li>flex-wrap: <code class="highlighter-rouge">wrap</code> <code class="highlighter-rouge">nowrap</code>   <code class="highlighter-rouge">wrap-reverse</code></li>
+  <li>flex-flow=flex-direction+flex-wrap;  <br />
+  <em>eg：  flex-flow: row wrap;</em></li>
+  <li>align-content <strong>整个group</strong> : <code class="highlighter-rouge">flex-start</code>/<code class="highlighter-rouge">end</code> <code class="highlighter-rouge">center</code>  <code class="highlighter-rouge">space-between</code>/<code class="highlighter-rouge">space-around</code> <code class="highlighter-rouge">stretch</code></li>
+</ul>
 
-<h3 id="1多台电脑提交代码的场景">1.多台电脑提交代码的场景</h3>
-<blockquote>
-  <p>在公司的时候，需要提交代码到GitLab上的repo；然后在家的时候，有时候也需要提交代码到公司项目中。那么push pull的时候一直输入用户名密码就比较费事了。</p>
-</blockquote>
+<p>⚠️reverse 的时候，start end也会倒过来的。</p>
 
-<p>那么<a href="https://help.github.com/articles/connecting-to-github-with-ssh/">使用ssh的方式</a>就可以解决上面这个问题。</p>
-
-<p>上面的超链接，提供了如下几点：</p>
-
-<ol>
-  <li>什么是ssh</li>
-  <li>检测已经存在的ssh Key</li>
-  <li>生成新的ssh Key并添加到ssh agent中
-    <blockquote>
-      <p>一般来说我们实际场景会需要生成两种，自己项目需要使用一个 id_rsa_github，公司项目需要使用一个 id_rsa_work。这样子，提交到不同repo的时候，才会有不同的用户名。</p>
-    </blockquote>
-  </li>
-  <li>检测是否成功</li>
-  <li>使用ssh工作</li>
-</ol>
-
-<blockquote>
-  <p>⚠️一定要做第四步的添加到agent中</p>
-  <h3 id="2-多个repo提交的时候使用不同的用户名">2. 多个Repo提交的时候，使用不同的用户名</h3>
-  <p>自己在GitHub上有项目需要维护，公司的项目也是用GitLab协作维护的，那么有时候在家用自己的电脑提交代码到公司，于是就产生需要在不同的项目应用不同<code class="highlighter-rouge">user name</code>的需求了；
-简单说，我在公司提交代码里面的用户名需要是RealName；而提交代码到GitHub的时候，想要用NickName</p>
-</blockquote>
-
-<p>这里涉及到的就是 <code class="highlighter-rouge">git config --global </code> 还是<code class="highlighter-rouge">git config --local</code> 的问题</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd  testRepo
-git config --local user.email personal@example.org
-git config --local user.name "whatf hobbyist user name"
-</code></pre></div></div>
-
-<blockquote>
-  <p>⚠️email地址不需要 双引号，而 用户名是需要的</p>
-</blockquote>
-
-<p>参考资料：</p>
-
-<p>1.<a href="https://stackoverflow.com/questions/4220416/can-i-specify-multiple-users-for-myself-in-gitconfig">Can I specify multiple users for myself in .gitconfig?</a></p>
-
-<p>2.<a href="http://happy123.me/blog/2014/12/07/duo-ge-gitzhang-hao-zhi-jian-de-qie-huan/">多个git账号之间的切换</a></p>
-
-<blockquote>
-  <p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
-</blockquote>
+<p>学习地址：http://flexboxfroggy.com/</p>
 
 
 	  </div>
@@ -197,8 +164,8 @@ git config --local user.name "whatf hobbyist user name"
 		  
 		  
 			 
-				<li><a href="/categories.html#git-ref">
-					git <span>(2)</span>
+				<li><a href="/categories.html#web-ref">
+					web <span>(1)</span>
 					
 				</a></li>
 			
@@ -213,7 +180,7 @@ git config --local user.name "whatf hobbyist user name"
 		<div>
       <section class="share col-sm-6">
         <h4 class="section-title">Share Post</h4>
-        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=ssh-and-git-account"
+        <a class="btn btn-default btn-sm twitter" href="http://twitter.com/share?text=flex-note"
            onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
           <i class="fa fa-twitter fa-lg"></i>
           Twitter
@@ -241,10 +208,10 @@ git config --local user.name "whatf hobbyist user name"
 
 		<ul class="pager">
 		  
-		  <li class="previous"><a href="/misc/2016/08/30/%E5%85%B3%E4%BA%8E%E5%90%84%E7%A7%8D%E8%AE%B8%E5%8F%AF.html" title="关于各种开源许可License">&larr; Previous</a></li>
+		  <li class="previous"><a href="/git/2018/01/31/ssh-and-git-account.html" title="ssh-and-git-account">&larr; Previous</a></li>
 		  
 		  
-		  <li class="next"><a href="/web/2018/12/11/flex-note.html" title="flex-note">Next &rarr;</a></li>
+			<li class="next disabled"><a>Next &rarr;</a>
 		  
 		</ul>
 
