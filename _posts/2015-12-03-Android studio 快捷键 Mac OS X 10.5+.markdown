@@ -153,7 +153,7 @@ __Setting__
 
 首次从大Win切换过来除了快捷键的困扰之外，还有看不懂的符号，参考下面这就get√了，还是对ctrl和⌘有阴影，虽然只是理解了option ＝＝alt .
 
->  [认识Mac 的键位和符号](http://softu.cn/457)
+>  [认识Mac 的键位和符号](https://support.apple.com/zh-cn/HT201236)
 
 
 
